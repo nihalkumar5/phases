@@ -4,6 +4,8 @@ import Header from '@/components/Header';
 import AddToCartButton from '@/components/AddToCartButton';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Phases Handcrafted | Premium Candles & Soft Toys',
   description: 'Discover our premium handcrafted candles and soft toys.',
