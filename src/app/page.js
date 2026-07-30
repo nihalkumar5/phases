@@ -17,10 +17,10 @@ export default async function Home() {
   const products = await getProducts();
 
   const categories = [
-    { label: 'Candles', img: 'https://images.unsplash.com/photo-1605814571933-2895690b2014?w=400&q=80', color: '#FCE7CC' },
-    { label: 'Freshner', img: 'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=400&q=80', color: '#D4D6EC' },
-    { label: 'Soft Toys', img: 'https://images.unsplash.com/photo-1581591524425-c7e0978865fc?w=400&q=80', color: '#FCE7CC' },
-    { label: 'Hampers', img: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400&q=80', color: '#FCE7CC' },
+    { label: 'Candles', img: '/cat_candles.png', color: '#FCE7CC' },
+    { label: 'Freshner', img: '/cat_freshner.png', color: '#D4D6EC' },
+    { label: 'Soft Toys', img: '/cat_soft_toys.png', color: '#FCE7CC' },
+    { label: 'Hampers', img: '/cat_hampers.png', color: '#FCE7CC' },
   ];
 
   return (
