@@ -2,6 +2,7 @@ import { getProducts } from '@/lib/shopify';
 import PremiumHero from "@/components/PremiumHero";
 import Header from '@/components/Header';
 import AddToCartButton from '@/components/AddToCartButton';
+import QuizSection from '@/components/QuizSection';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -15,11 +16,10 @@ export default async function Home() {
   const products = await getProducts();
 
   const categories = [
-    { label: 'Candles\nFor Her', img: '/cat1.png', color: '#FCE7CC' },
-    { label: 'Candles\nFor Him', img: '/cat2.png', color: '#FCE7CC' },
-    { label: 'Scent\nDiffusers', img: '/cat3.png', color: '#D4D6EC' },
-    { label: 'Soft Toys\nFor Kids', img: '/cat4.png', color: '#FCE7CC' },
-    { label: 'Bundle\n& Save', img: '/cat5.png', color: '#FCE7CC' },
+    { label: 'Candles', img: '/cat1.png', color: '#FCE7CC' },
+    { label: 'Freshner', img: '/cat3.png', color: '#D4D6EC' },
+    { label: 'Soft Toys', img: '/cat4.png', color: '#FCE7CC' },
+    { label: 'Hampers', img: '/cat5.png', color: '#FCE7CC' },
   ];
 
   return (
@@ -61,11 +61,11 @@ export default async function Home() {
       <div className="marquee-container">
         <div className="marquee-content">
           <span>EXPRESS DELIVERY</span>
-          <span>COD AVAILABLE</span>
+          <span>ENJOY FREE SHIPPING ON ORDERS ABOVE ₹500</span>
           <span>PRICES REDUCED AFTER GST 2.0 (MRP MAY VARY)</span>
           <span>FREE, DISCREET & 1-3 DAY EXPRESS DELIVERY</span>
           <span>EXPRESS DELIVERY</span>
-          <span>COD AVAILABLE</span>
+          <span>ENJOY FREE SHIPPING ON ORDERS ABOVE ₹500</span>
           <span>PRICES REDUCED AFTER GST 2.0 (MRP MAY VARY)</span>
           <span>FREE, DISCREET & 1-3 DAY EXPRESS DELIVERY</span>
         </div>
@@ -105,9 +105,9 @@ export default async function Home() {
 
       {/* Latest Arrivals */}
       <section id="products" className="products-section">
-        <div className="products-header reveal-up">
-          <h2 className="products-title">Latest Arrivals</h2>
-          <p className="products-subtitle">Explore our newest hand-poured candles and comforting soft companions.</p>
+        <div className="products-header reveal-up" style={{ gap: '1.5rem', padding: '0 2rem' }}>
+          <h2 className="products-title" style={{ marginBottom: '0.5rem' }}>Latest Arrivals</h2>
+          <p className="products-subtitle" style={{ marginTop: '0' }}>Explore our newest hand-poured candles and comforting soft companions.</p>
         </div>
 
         {products.length === 0 ? (
@@ -120,41 +120,37 @@ export default async function Home() {
               const { node } = product;
               const image = node.images.edges[0]?.node;
               const price = node.priceRange.maxVariantPrice;
-              const offsetStyle = index % 2 === 1 ? { marginTop: '4rem' } : {};
-              
               return (
                 <div 
                   key={node.id} 
-                  className="product-card glass-card reveal-up group" 
-                  style={{ animationDelay: `${index * 0.15}s`, ...offsetStyle, display: 'flex', flexDirection: 'column' }}
+                  className="product-card flat-card reveal-up group" 
+                  style={{ animationDelay: `${index * 0.15}s`, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
                 >
-                  <Link href={`/product/${node.handle}`} style={{ textDecoration: 'none', color: 'inherit', flexGrow: 1 }}>
-                    <div className="product-image-container">
+                  <Link href={`/product/${node.handle}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+                    <div className="product-image-container" style={{ backgroundColor: '#f9f9f9', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', aspectRatio: '1/1', marginBottom: '1rem', overflow: 'hidden' }}>
                       {image ? (
                         <img 
                           src={image.url} 
                           alt={image.altText || node.title} 
                           loading="lazy"
-                          className="product-img"
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                       ) : (
-                        <div className="product-no-img">
-                          No Image
-                        </div>
+                        <div className="product-no-img">No Image</div>
                       )}
                     </div>
-                    <div className="product-info" style={{ paddingBottom: '0.5rem' }}>
-                      <h3 className="product-title">{node.title}</h3>
+                    <div className="product-info" style={{ padding: '0' }}>
+                      <h3 className="product-title" style={{ fontSize: '0.9rem', fontWeight: '500', color: '#333', marginBottom: '0.2rem' }}>{node.title.split('|')[0].trim()}</h3>
+                      <p className="product-price" style={{ margin: 0, fontWeight: '600', fontSize: '0.9rem', color: '#111' }}>
+                        {new Intl.NumberFormat('en-IN', {
+                          style: 'currency',
+                          currency: price.currencyCode,
+                          maximumFractionDigits: 0
+                        }).format(price.amount)}
+                      </p>
                     </div>
                   </Link>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 1.2rem 1.2rem 1.2rem' }}>
-                    <p className="product-price" style={{ margin: 0, fontWeight: '600', fontSize: '1.2rem', color: '#111' }}>
-                      {new Intl.NumberFormat('en-IN', {
-                        style: 'currency',
-                        currency: price.currencyCode,
-                        maximumFractionDigits: 0
-                      }).format(price.amount)}
-                    </p>
+                  <div style={{ marginTop: '0.5rem' }}>
                     <AddToCartButton 
                       variantId={node.variants.edges[0]?.node?.id} 
                       disabled={!node.variants.edges[0]?.node?.availableForSale}
@@ -166,6 +162,9 @@ export default async function Home() {
           </div>
         )}
       </section>
+
+      {/* Quiz Banner Section */}
+      <QuizSection />
 
       {/* Insta Updates Section */}
       <section className="insta-updates-section reveal-up">
@@ -316,25 +315,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Quiz Banner Section */}
-      <section className="quiz-banner reveal-up">
-        <div className="quiz-image bezel-shell">
-          <div className="bezel-core">
-            <img src="https://images.unsplash.com/photo-1605814571933-2895690b2014?w=800&q=80" alt="Products" loading="lazy" />
-          </div>
-        </div>
-        <div className="quiz-content">
-          <div className="pill-label accent-pill mb-6">QUIZ</div>
-          <h2 className="quiz-title">Need help choosing the perfect scent?</h2>
-          <p className="quiz-subtitle">Take our 30 second quiz to find the perfect product for your home!</p>
-          <button className="btn-island light-island group">
-            <span className="btn-island-text">Take Our Quiz</span>
-            <div className="btn-nested-wrapper dark-nested">
-              <span>↗</span>
-            </div>
-          </button>
-        </div>
-      </section>
+
 
       {/* Newsletter Signup */}
       <section className="newsletter-section reveal-up">

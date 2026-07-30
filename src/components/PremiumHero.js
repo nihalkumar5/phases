@@ -8,29 +8,14 @@ const slides = [
     image: '/home-still.jpg',
     title: (
       <>
-        handmade<br/>natural<br/>scented candle
+        Illuminate Your<br/>Everyday.
       </>
     ),
     text: (
       <>
-        a sense of intimacy, togetherness and<br/>
-        inner warmth, a world lit by candles<br/>
-        and snuggled under blankets.
-      </>
-    )
-  },
-  {
-    image: '/cat3.png',
-    title: (
-      <>
-        handcrafted<br/>premium<br/>soft companions
-      </>
-    ),
-    text: (
-      <>
-        a gentle touch of comfort, woven<br/>
-        with love and care, creating moments<br/>
-        of pure joy for everyday living.
+        Discover our artisanal collection of hand-poured<br/>
+        soy wax candles, crafted to bring warmth and<br/>
+        captivating fragrances to your space.
       </>
     )
   }
@@ -80,31 +65,16 @@ export default function PremiumHero() {
 
         <div className="premium-hero-bottom">
           <div className="premium-hero-slider">
-            <div className="slider-indicator">
-              <span>0{currentIndex + 1}</span>
-              <div className="slider-line">
-                <div 
-                  className="slider-progress"
-                  style={{ 
-                    width: `${((currentIndex + 1) / slides.length) * 100}%`,
-                    transition: 'width 0.5s ease-in-out'
-                  }}
-                ></div>
-              </div>
-              <span>0{slides.length}</span>
-            </div>
+
             <p className="slider-text" key={`text-${currentIndex}`} style={{ animation: 'revealUpAnim 1s ease forwards' }}>
               {slides[currentIndex % slides.length].text}
             </p>
           </div>
 
-          <div className="mobile-center-btn" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', gap: '0.8rem' }}>
+          <div className="mobile-left-btn" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%', gap: '0.8rem' }}>
             <Link href="#products" className="premium-shop-btn">
-              shop now
+              Shop Collection
             </Link>
-            <span style={{ fontSize: '0.8rem', fontWeight: 300, color: 'rgba(255,255,255,0.8)', letterSpacing: '0.03em', textAlign: 'center' }}>
-              enjoy free shipping on prepaid orders
-            </span>
           </div>
         </div>
       </div>

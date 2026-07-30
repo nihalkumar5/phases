@@ -48,15 +48,29 @@ export default function Header({ theme = 'light' }) {
         
         {/* Left Side: Logo & Nav */}
         <div className="header-left">
-          <Link href="/" style={{ fontFamily: 'var(--font-sans)', fontSize: '1.4rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'inherit', textDecoration: 'none' }}>
-            phases handcrafted.
+          <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+            <img src="/logo.png" alt="Phases Handcrafted" style={{ height: '40px', objectFit: 'contain' }} />
           </Link>
           
           <div className="header-links">
-            <Link href="#shop" style={{ color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem' }} className="header-link">
-              shop 
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
-            </Link>
+            <div className="header-dropdown-container" style={{ position: 'relative' }} onMouseEnter={(e) => e.currentTarget.querySelector('.dropdown-content').style.opacity = '1'} onMouseLeave={(e) => e.currentTarget.querySelector('.dropdown-content').style.opacity = '0'}>
+              <Link href="#shop" style={{ color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '1rem 0' }} className="header-link">
+                shop 
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
+              </Link>
+              <div className="dropdown-content" style={{ 
+                position: 'absolute', top: '100%', left: '0', 
+                backgroundColor: '#ffffff', color: '#111', 
+                minWidth: '180px', borderRadius: '12px', padding: '0.5rem',
+                boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+                opacity: 0, transition: 'opacity 0.2s', pointerEvents: 'none',
+                display: 'flex', flexDirection: 'column', gap: '0.2rem'
+              }}>
+                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Candles</Link>
+                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Soft Toys</Link>
+                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Hampers</Link>
+              </div>
+            </div>
             <Link href="#about" style={{ color: 'inherit', textDecoration: 'none' }} className="header-link">about</Link>
             <Link href="#contact" style={{ color: 'inherit', textDecoration: 'none' }} className="header-link">contact</Link>
           </div>

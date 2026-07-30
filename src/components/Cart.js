@@ -29,16 +29,16 @@ export default function Cart() {
       {/* Drawer */}
       <div style={{ 
         position: 'absolute', right: 0, top: 0, bottom: 0, width: '100%', maxWidth: '400px', 
-        backgroundColor: 'var(--background)', color: 'var(--foreground)',
+        backgroundColor: '#ffffff', color: '#111111',
         boxShadow: '-10px 0 30px rgba(0,0,0,0.1)', display: 'flex', flexDirection: 'column',
         transform: isCartOpen ? 'translateX(0)' : 'translateX(100%)',
         transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
       }}>
         
         {/* Header */}
-        <div style={{ padding: '1.5rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border)' }}>
-          <h2 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-serif)', fontWeight: 600 }}>Your Cart</h2>
-          <button onClick={closeCart} style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1.5rem', color: 'var(--muted)' }}>&times;</button>
+        <div style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eaeaea' }}>
+          <h2 style={{ fontSize: '1.4rem', fontWeight: '500', color: '#111', letterSpacing: '-0.02em', margin: 0 }}>Shopping Cart</h2>
+          <button onClick={closeCart} style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '2rem', color: '#666', lineHeight: 1 }}>&times;</button>
         </div>
 
         {/* Items */}
@@ -52,17 +52,19 @@ export default function Cart() {
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               {cart.lines.edges.map(({ node }) => (
-                <div key={node.id} style={{ display: 'flex', gap: '1rem' }}>
-                  <div style={{ width: '80px', height: '80px', backgroundColor: '#f5f5f7', borderRadius: '8px', overflow: 'hidden' }}>
+                <div key={node.id} style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                  <div style={{ width: '100px', height: '100px', backgroundColor: '#f9f9f9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {node.merchandise.image && (
                       <img src={node.merchandise.image.url} alt="Product" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     )}
                   </div>
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 500 }}>{node.merchandise.product.title}</h3>
-                    <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>Qty: {node.quantity}</p>
-                    <p style={{ fontWeight: 600, marginTop: '0.25rem' }}>
-                      {new Intl.NumberFormat('en-IN', { style: 'currency', currency: node.merchandise.price.currencyCode }).format(node.merchandise.price.amount)}
+                    <h3 style={{ fontSize: '1rem', fontWeight: '500', color: '#111', marginBottom: '0.25rem', lineHeight: 1.3 }}>
+                      {node.merchandise.product.title.split('|')[0].trim()}
+                    </h3>
+                    <p style={{ color: '#666', fontSize: '0.85rem', marginBottom: '0.5rem' }}>Qty: {node.quantity}</p>
+                    <p style={{ fontWeight: '600', fontSize: '1rem', color: '#111', margin: 0 }}>
+                      {new Intl.NumberFormat('en-IN', { style: 'currency', currency: node.merchandise.price.currencyCode, maximumFractionDigits: 0 }).format(node.merchandise.price.amount)}
                     </p>
                   </div>
                 </div>
@@ -73,19 +75,21 @@ export default function Cart() {
 
         {/* Footer */}
         {cart && cart.lines?.edges?.length > 0 && (
-          <div style={{ padding: '2rem', borderTop: '1px solid var(--border)', backgroundColor: 'var(--background)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem', fontSize: '1.1rem', fontWeight: 600 }}>
+          <div style={{ padding: '2rem', borderTop: '1px solid #eaeaea', backgroundColor: '#ffffff' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem', fontSize: '1.2rem', fontWeight: '500', color: '#111' }}>
               <span>Subtotal</span>
               <span>
-                {new Intl.NumberFormat('en-IN', { style: 'currency', currency: cart.estimatedCost.totalAmount.currencyCode }).format(cart.estimatedCost.totalAmount.amount)}
+                {new Intl.NumberFormat('en-IN', { style: 'currency', currency: cart.estimatedCost.totalAmount.currencyCode, maximumFractionDigits: 0 }).format(cart.estimatedCost.totalAmount.amount)}
               </span>
             </div>
             <a 
               href={cart.checkoutUrl} 
-              className="button-accent"
-              style={{ display: 'block', width: '100%', padding: '1rem', textAlign: 'center', textDecoration: 'none' }}
+              style={{ 
+                display: 'block', width: '100%', padding: '1.2rem', textAlign: 'center', textDecoration: 'none',
+                backgroundColor: '#111', color: '#fff', fontSize: '0.9rem', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '0.05em'
+              }}
             >
-              Checkout securely
+              Checkout Securely
             </a>
           </div>
         )}
