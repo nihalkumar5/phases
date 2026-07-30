@@ -433,14 +433,15 @@ html, body {
 
 /* Delivery Section */
 .delivery-section {
-  padding: 10rem 2rem;
+  padding: 8rem 4rem;
   background-color: var(--bg-cream);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6rem;
+  gap: 4rem;
   max-width: 1400px;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .delivery-text {
@@ -450,7 +451,7 @@ html, body {
 
 .delivery-title {
   font-family: var(--font-serif);
-  font-size: 4rem;
+  font-size: 3.5rem;
   font-weight: 400;
   color: var(--text-espresso);
   line-height: 1.1;
@@ -458,7 +459,7 @@ html, body {
 }
 
 .delivery-subtitle {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 400;
   color: var(--text-espresso);
   opacity: 0.8;
@@ -467,12 +468,15 @@ html, body {
 .delivery-image {
   flex: 1;
   max-width: 600px;
+  width: 100%;
 }
 
 .delivery-image img {
   width: 100%;
   height: auto;
-  border-radius: 2rem;
+  border-radius: 1.5rem;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
 /* Quiz Banner */

@@ -36,6 +36,28 @@ export default function Header({ theme = 'light' }) {
       color: (!scrolled && isTransparent && !isDarkText) ? '#fff' : '#111',
       transition: 'all 0.4s ease'
     }}>
+      {/* Announcement Bar */}
+      <div style={{
+        backgroundColor: 'var(--bg-cream, #FDF7F5)', 
+        color: '#111', 
+        padding: '0.6rem 2rem', 
+        fontSize: '0.85rem',
+        fontWeight: '500',
+        display: 'flex', 
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottom: '1px solid rgba(0,0,0,0.05)',
+        letterSpacing: '0.02em',
+        display: scrolled ? 'none' : 'flex'
+      }}>
+        <button style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <div style={{ textAlign: 'center', flex: 1 }}>
+          Up to 40% OFF on selected products + Extra 10% off on your First Order
+          <div style={{ fontStyle: 'italic', opacity: 0.8, fontSize: '0.75rem', marginTop: '0.1rem' }}>(Discount applied automatically at checkout)</div>
+        </div>
+        <button style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+      
       {/* Main Header */}
       <nav 
         className="header-nav"
@@ -53,22 +75,26 @@ export default function Header({ theme = 'light' }) {
           </Link>
           
           <div className="header-links">
-            <div className="header-dropdown-container" style={{ position: 'relative' }} onMouseEnter={(e) => e.currentTarget.querySelector('.dropdown-content').style.opacity = '1'} onMouseLeave={(e) => e.currentTarget.querySelector('.dropdown-content').style.opacity = '0'}>
-              <Link href="#shop" style={{ color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '1rem 0' }} className="header-link">
+            <div className="header-dropdown-container" style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }} onMouseEnter={(e) => e.currentTarget.querySelector('.dropdown-content').style.opacity = '1'} onMouseLeave={(e) => e.currentTarget.querySelector('.dropdown-content').style.opacity = '0'}>
+              <Link href="#shop" style={{ color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem' }} className="header-link">
                 shop 
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
               </Link>
               <div className="dropdown-content" style={{ 
-                position: 'absolute', top: '100%', left: '0', 
+                position: 'absolute', top: '100%', left: '0', marginTop: '1rem',
                 backgroundColor: '#ffffff', color: '#111', 
                 minWidth: '180px', borderRadius: '12px', padding: '0.5rem',
                 boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
                 opacity: 0, transition: 'opacity 0.2s', pointerEvents: 'none',
                 display: 'flex', flexDirection: 'column', gap: '0.2rem'
               }}>
+                {/* Invisible bridge for hover */}
+                <div style={{ position: 'absolute', top: '-1rem', left: 0, right: 0, height: '1rem' }}></div>
                 <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Candles</Link>
+                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Rakhi</Link>
                 <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Soft Toys</Link>
-                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Hampers</Link>
+                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Sale</Link>
+                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Hamper</Link>
               </div>
             </div>
             <Link href="#about" style={{ color: 'inherit', textDecoration: 'none' }} className="header-link">about</Link>

@@ -3,6 +3,7 @@ import PremiumHero from "@/components/PremiumHero";
 import Header from '@/components/Header';
 import AddToCartButton from '@/components/AddToCartButton';
 import QuizSection from '@/components/QuizSection';
+import ReviewsSection from '@/components/ReviewsSection';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -165,6 +166,9 @@ export default async function Home() {
 
       {/* Quiz Banner Section */}
       <QuizSection />
+
+      {/* Reviews Section */}
+      <ReviewsSection />
 
       {/* Insta Updates Section */}
       <section className="insta-updates-section reveal-up">
