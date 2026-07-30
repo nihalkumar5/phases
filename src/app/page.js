@@ -17,10 +17,10 @@ export default async function Home() {
   const products = await getProducts();
 
   const categories = [
-    { label: 'Candles', img: '/cat1.png', color: '#FCE7CC' },
-    { label: 'Freshner', img: '/cat3.png', color: '#D4D6EC' },
-    { label: 'Soft Toys', img: '/cat4.png', color: '#FCE7CC' },
-    { label: 'Hampers', img: '/cat5.png', color: '#FCE7CC' },
+    { label: 'Candles', img: 'https://images.unsplash.com/photo-1605814571933-2895690b2014?w=400&q=80', color: '#FCE7CC' },
+    { label: 'Freshner', img: 'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=400&q=80', color: '#D4D6EC' },
+    { label: 'Soft Toys', img: 'https://images.unsplash.com/photo-1581591524425-c7e0978865fc?w=400&q=80', color: '#FCE7CC' },
+    { label: 'Hampers', img: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400&q=80', color: '#FCE7CC' },
   ];
 
   return (
@@ -179,56 +179,6 @@ export default async function Home() {
           <img src="/cat3.png" alt="Insta update 3" loading="lazy" />
           <img src="/cat4.png" alt="Insta update 4" loading="lazy" />
           <img src="/cat5.png" alt="Insta update 5" loading="lazy" />
-        </div>
-      </section>
-
-      {/* Real Customer Stories Section */}
-      <section className="reviews-section reveal-up">
-        <div className="reviews-header">
-          <h2 className="reviews-title">Real Customer Stories</h2>
-          <div className="reviews-rating-summary">
-            <span style={{ color: '#f59e0b' }}>★★★★★</span>
-            <span>5.00 ★ (74 Reviews)</span>
-            <span className="verified-badge">✓ Verified Store</span>
-          </div>
-        </div>
-        <div className="reviews-grid">
-          <div className="review-card">
-            <div>
-              <div className="review-stars">★★★★★</div>
-              <p className="review-text">
-                "The Iced Matcha Candle smells divine! It completely fills my living room with a calming scent without being overwhelming. The glass finish looks so aesthetic."
-              </p>
-            </div>
-            <div className="review-author">
-              <span className="author-name">Ananya S.</span>
-              <span className="verified-badge">✓ Verified Buyer</span>
-            </div>
-          </div>
-          <div className="review-card">
-            <div>
-              <div className="review-stars">★★★★★</div>
-              <p className="review-text">
-                "Ordered as a gift for a friend and she fell in love instantly. The packaging was super safe and elegant. Will definitely be ordering more!"
-              </p>
-            </div>
-            <div className="review-author">
-              <span className="author-name">Rohan M.</span>
-              <span className="verified-badge">✓ Verified Buyer</span>
-            </div>
-          </div>
-          <div className="review-card">
-            <div>
-              <div className="review-stars">★★★★★</div>
-              <p className="review-text">
-                "You can tell how much care goes into making these. The soy wax burns so clean and even. Easily the best handcrafted candles in India."
-              </p>
-            </div>
-            <div className="review-author">
-              <span className="author-name">Priyanka D.</span>
-              <span className="verified-badge">✓ Verified Buyer</span>
-            </div>
-          </div>
         </div>
       </section>
 
