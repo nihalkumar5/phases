@@ -77,7 +77,7 @@ export default async function Home() {
         <h2 className="categories-heading">Shop by Category</h2>
         <div className="categories-list">
           {categories.map((cat, idx) => (
-            <div key={idx} className="category-item">
+            <Link key={idx} href="#products" className="category-item" style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>
               {cat.isOffer ? (
                 <div className="category-circle offer">
                   50%<br/>OFF
@@ -92,7 +92,7 @@ export default async function Home() {
               <div className="category-label" style={{ whiteSpace: 'pre-line' }}>
                 {cat.label}
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
