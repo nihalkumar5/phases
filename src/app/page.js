@@ -17,10 +17,10 @@ export default async function Home() {
   const products = await getProducts();
 
   const categories = [
-    { label: 'Candles', img: '/cat_candles.png', color: '#FCE7CC' },
-    { label: 'Freshner', img: '/cat_freshner.png', color: '#D4D6EC' },
-    { label: 'Soft Toys', img: '/cat_soft_toys.png', color: '#FCE7CC' },
-    { label: 'Hampers', img: '/cat_hampers.png', color: '#FCE7CC' },
+    { label: 'Candles', img: '/cat_candles.png', color: '#161A1F' },
+    { label: 'Freshner', img: '/cat_freshner.png', color: '#161A1F' },
+    { label: 'Soft Toys', img: '/cat_soft_toys.png', color: '#161A1F' },
+    { label: 'Hampers', img: '/cat_hampers.png', color: '#161A1F' },
   ];
 
   return (
@@ -141,8 +141,8 @@ export default async function Home() {
                       )}
                     </div>
                     <div className="product-info" style={{ padding: '0' }}>
-                      <h3 className="product-title" style={{ fontSize: '0.9rem', fontWeight: '500', color: '#333', marginBottom: '0.2rem' }}>{node.title.split('|')[0].trim()}</h3>
-                      <p className="product-price" style={{ margin: 0, fontWeight: '600', fontSize: '0.9rem', color: '#111' }}>
+                      <h3 className="product-title" style={{ fontSize: '0.9rem', fontWeight: '500', marginBottom: '0.2rem' }}>{node.title.split('|')[0].trim()}</h3>
+                      <p className="product-price" style={{ margin: 0, fontWeight: '600', fontSize: '0.9rem' }}>
                         {new Intl.NumberFormat('en-IN', {
                           style: 'currency',
                           currency: price.currencyCode,

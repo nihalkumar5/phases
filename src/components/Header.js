@@ -33,12 +33,12 @@ export default function Header({ theme = 'light' }) {
       backgroundColor: (!scrolled && isTransparent) ? 'transparent' : (isTransparent ? 'rgba(0, 0, 0, 0.02)' : 'rgba(255, 255, 255, 0.7)'),
       backdropFilter: (!scrolled && isTransparent) ? 'none' : 'blur(12px)',
       WebkitBackdropFilter: (!scrolled && isTransparent) ? 'none' : 'blur(12px)',
-      color: (!scrolled && isTransparent && !isDarkText) ? '#fff' : '#111',
+      color: 'var(--text-espresso)',
       transition: 'all 0.4s ease'
     }}>
       {/* Announcement Bar */}
       <div style={{
-        backgroundColor: 'var(--bg-cream, #FDF7F5)', 
+        backgroundColor: 'var(--ticker-bg, #D4AF37)', 
         color: '#111', 
         padding: '0.6rem 2rem', 
         fontSize: '0.85rem',
@@ -60,7 +60,7 @@ export default function Header({ theme = 'light' }) {
       
       {/* Main Header */}
       <nav 
-        className="header-nav"
+        className={`header-nav ${scrolled ? 'header-scrolled glass-panel' : ''}`}
         style={{ 
           padding: scrolled ? '1.2rem 1.5rem' : '2rem 1.5rem', 
           borderBottom: scrolled ? 'none' : (isTransparent ? '2px solid rgba(255, 255, 255, 0.5)' : '1px solid rgba(0, 0, 0, 0.1)'),
@@ -80,9 +80,9 @@ export default function Header({ theme = 'light' }) {
                 shop 
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
               </Link>
-              <div className="dropdown-content" style={{ 
+              <div className="dropdown-content glass-panel" style={{ 
                 position: 'absolute', top: '100%', left: '0', marginTop: '1rem',
-                backgroundColor: '#ffffff', color: '#111', 
+                color: 'var(--text-espresso)', 
                 minWidth: '180px', borderRadius: '12px', padding: '0.5rem',
                 boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
                 opacity: 0, transition: 'opacity 0.2s', pointerEvents: 'none',

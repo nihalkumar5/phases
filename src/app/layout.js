@@ -1,19 +1,20 @@
-import { Inter } from "next/font/google";
+import { Playfair_Display, Outfit } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/components/CartContext";
 import Cart from "@/components/Cart";
 
-const inter = Inter({ subsets: ["latin"] });
+const playfair = Playfair_Display({ subsets: ["latin"], variable: '--font-serif' });
+const outfit = Outfit({ subsets: ["latin"], variable: '--font-sans' });
 
 export const metadata = {
   title: "Phases Handcrafted",
-  description: "Apple-level minimal design store",
+  description: "Premium handcrafted candles and soft toys",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className} suppressHydrationWarning>
+      <body className={`${outfit.variable} ${playfair.variable}`} suppressHydrationWarning>
         <CartProvider>
           {children}
           <Cart />

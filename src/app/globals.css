@@ -37,16 +37,19 @@ html, body {
     --ring: 11 44% 59%;
     --radius: 2rem;
     
-    /* High-End Editorial Luxury Theme */
-    --bg-cream: #FDFBF7;
-    --text-espresso: #2C2C2C;
-    --accent-sage: #8A9A86;
-    --accent-terra: #C87965;
-    --promo-bg: #EAE6D8;
-    --promo-text: #2C2C2C;
-    --ticker-bg: #2C2C2C;
-    --ticker-text: #FDFBF7;
-    --shadow-diffused: 0 20px 40px -10px rgba(0,0,0,0.05);
+    /* Midnight Luxury Theme */
+    --bg-cream: #0C0F12;
+    --text-espresso: #FDFBF7;
+    --accent-sage: #D4AF37; /* Gold */
+    --accent-terra: #B89932; /* Deep Gold */
+    --promo-bg: #161A1F;
+    --promo-text: #D4AF37;
+    --ticker-bg: #D4AF37;
+    --ticker-text: #0C0F12;
+    --shadow-diffused: 0 20px 40px -10px rgba(0,0,0,0.5);
+    
+    --font-sans: var(--font-sans, 'Outfit', sans-serif);
+    --font-serif: var(--font-serif, 'Playfair Display', serif);
   }
 
   .dark {
@@ -56,9 +59,9 @@ html, body {
     --card-foreground: 42 33% 97%;
     --popover: 0 0% 5%;
     --popover-foreground: 42 33% 97%;
-    --primary: 11 44% 59%;
+    --primary: 43 74% 49%; /* Gold */
     --primary-foreground: 0 0% 98%;
-    --secondary: 104 11% 56%;
+    --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 60%;
@@ -68,14 +71,14 @@ html, body {
     --destructive-foreground: 42 33% 97%;
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 11 44% 59%;
+    --ring: 43 74% 49%;
     
-    --bg-cream: #0D0D0D;
+    --bg-cream: #0C0F12;
     --text-espresso: #FDFBF7;
-    --promo-bg: #1A1A1A;
-    --promo-text: #FDFBF7;
-    --ticker-bg: #FDFBF7;
-    --ticker-text: #0D0D0D;
+    --promo-bg: #161A1F;
+    --promo-text: #D4AF37;
+    --ticker-bg: #D4AF37;
+    --ticker-text: #0C0F12;
   }
 }
 
@@ -90,7 +93,11 @@ html, body {
     @apply bg-background text-foreground;
     background-color: var(--bg-cream);
     color: var(--text-espresso);
-    font-family: var(--font-sans), sans-serif;
+    font-family: var(--font-sans);
+  }
+  
+  h1, h2, h3, h4, h5, h6, .hero-title, .categories-heading, .marquee-content, .reviews-title {
+    font-family: var(--font-serif);
   }
   
   /* CSS Noise Overlay */
@@ -603,8 +610,8 @@ html, body {
 
 /* Footer Robust */
 .footer-robust {
-  background-color: var(--text-espresso);
-  color: var(--bg-cream);
+  background-color: var(--promo-bg);
+  color: var(--text-espresso);
   padding: 8rem 2rem 3rem 2rem;
   margin-top: 6rem;
 }
@@ -648,7 +655,7 @@ html, body {
 }
 
 .footer-links a:hover {
-  color: var(--bg-cream);
+  color: var(--accent-sage);
 }
 
 .footer-bottom {
@@ -893,6 +900,7 @@ html, body {
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: -0.01em;
+  color: var(--text-espresso);
   transition: color 0.3s ease;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -910,6 +918,24 @@ html, body {
   font-size: 0.95rem;
   letter-spacing: 0.02em;
 }
+
+  .noise-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .glass-panel {
+    background: rgba(12, 15, 18, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(212, 175, 55, 0.15); /* Subtle gold border */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
 
 /* Island Button & Pills */
 .pill-label {
@@ -1411,8 +1437,8 @@ html, body {
 .marquee-container {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  background: #111;
-  color: #fff;
+  background: var(--ticker-bg);
+  color: var(--promo-bg);
   padding: 1.2rem 0;
   overflow: hidden;
   white-space: nowrap;
@@ -1556,7 +1582,7 @@ html, body {
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 0.85rem;
-  color: #888;
+  color: var(--accent-sage);
   font-weight: 400;
 }
 
@@ -1565,13 +1591,13 @@ html, body {
   font-size: clamp(2.2rem, 4vw, 3.5rem);
   line-height: 1.2;
   font-weight: 400;
-  color: #111;
+  color: var(--text-espresso);
 }
 
 .maker-story-p {
   font-size: 1.1rem;
   line-height: 1.7;
-  color: #555;
+  color: rgba(253, 251, 247, 0.7);
   font-weight: 300;
 }
 
