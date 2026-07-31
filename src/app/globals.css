@@ -488,7 +488,7 @@ html, body {
 
 /* Quiz Banner */
 .quiz-banner {
-  background-color: var(--text-espresso);
+  background-color: var(--promo-bg);
   border-radius: 2.5rem;
   max-width: 1400px;
   margin: 6rem auto;
@@ -515,7 +515,7 @@ html, body {
 .quiz-content {
   flex: 1;
   padding: 6rem 5rem;
-  color: var(--bg-cream);
+  color: var(--text-espresso);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -526,7 +526,7 @@ html, body {
   font-family: var(--font-serif);
   font-size: 3.5rem;
   font-weight: 400;
-  color: var(--bg-cream);
+  color: var(--text-espresso);
   line-height: 1.1;
   margin-bottom: 2rem;
 }
@@ -676,6 +676,11 @@ html, body {
   }
   .quiz-banner {
     flex-direction: column;
+    margin: 3rem 1rem;
+    border-radius: 1.5rem;
+  }
+  .quiz-content {
+    padding: 3rem 1.5rem;
   }
   .quiz-image {
     min-height: 400px;
