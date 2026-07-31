@@ -239,7 +239,7 @@ export default async function Home() {
         <div className="promise-grid">
           <div className="promise-item">
             <div className="promise-icon-circle">
-              <img src="https://cdn-icons-png.flaticon.com/512/195/195155.png" alt="Trusted" />
+              <img src="https://cdn-icons-png.flaticon.com/512/195/195155.png" alt="Trusted" style={{ filter: 'invert(1)' }} />
             </div>
             <div className="promise-label">Trusted by Thousands</div>
           </div>
@@ -251,7 +251,7 @@ export default async function Home() {
           </div>
           <div className="promise-item">
             <div className="promise-icon-circle">
-              <img src="https://cdn-icons-png.flaticon.com/512/888/888034.png" alt="Quality" />
+              <img src="https://cdn-icons-png.flaticon.com/512/888/888034.png" alt="Quality" style={{ filter: 'invert(1)' }} />
             </div>
             <div className="promise-label">Premium Handcrafted Quality</div>
           </div>
