@@ -34,7 +34,7 @@ export default function Header({ theme = 'light' }) {
   const isDarkText = theme === 'light' || theme === 'transparent-dark';
   
   return (
-    <header>
+    <>
       {/* Announcement Bar */}
       <div style={{
         backgroundColor: '#1b2c13',
@@ -54,7 +54,7 @@ export default function Header({ theme = 'light' }) {
       </div>
       
       {/* Main Header */}
-      <nav 
+      <header 
         style={{ 
           position: 'sticky',
           top: 0,
@@ -105,7 +105,7 @@ export default function Header({ theme = 'light' }) {
             </span>
           </span>
         </div>
-      </nav>
+      </header>
 
       {/* Search Overlay */}
       <div style={{
@@ -255,6 +255,6 @@ export default function Header({ theme = 'light' }) {
           display: none;
         }
       `}} />
-    </header>
+    </>
   );
 }
