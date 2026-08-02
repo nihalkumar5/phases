@@ -178,6 +178,42 @@ export async function addToExistingCart(cartId, variantId, quantity) {
   return response.body?.data?.cartLinesAdd?.cart;
 }
 
+export async function updateCartLines(cartId, lines) {
+  const query = `
+    mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+      cartLinesUpdate(cartId: $cartId, lines: $lines) {
+        cart {
+          id
+          checkoutUrl
+          lines(first: 10) {
+            edges {
+              node {
+                id
+                quantity
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    title
+                    price { amount currencyCode }
+                    product { title handle }
+                    image { url }
+                  }
+                }
+              }
+            }
+          }
+          estimatedCost {
+            totalAmount { amount currencyCode }
+          }
+        }
+      }
+    }
+  `;
+  const variables = { cartId, lines };
+  const response = await shopifyFetch({ query, variables });
+  return response.body?.data?.cartLinesUpdate?.cart;
+}
+
 export async function getCart(cartId) {
   const query = `
     query getCart($cartId: ID!) {

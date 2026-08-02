@@ -3,18 +3,55 @@
 import { useCart } from './CartContext';
 
 export default function AddToCartButton({ variantId, disabled, priceFormatted }) {
-  const { addToCart, isLoading } = useCart();
+  const { cart, addToCart, updateQuantity, isLoading } = useCart();
+  
+  // Find if it's already in the cart
+  const cartLine = cart?.lines?.edges?.find(e => e.node.merchandise.id === variantId);
+  const quantity = cartLine ? cartLine.node.quantity : 0;
+
+  const handleAdd = () => {
+    addToCart(variantId, 1, false);
+  };
+
+  const increment = () => {
+    updateQuantity(variantId, quantity + 1);
+  };
+
+  const decrement = () => {
+    updateQuantity(variantId, quantity - 1);
+  };
+
+  if (quantity > 0) {
+    return (
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#1b3021',
+        color: '#fff',
+        padding: '0',
+        width: '100%',
+        height: '3.5rem',
+        fontSize: '1.2rem',
+        fontWeight: '600'
+      }}>
+        <button onClick={decrement} disabled={isLoading} style={{ flex: 1, height: '100%', background: 'none', border: 'none', color: '#fff', cursor: isLoading ? 'not-allowed' : 'pointer', fontSize: '1.5rem', opacity: isLoading ? 0.7 : 1 }}>-</button>
+        <span style={{ flex: 1, textAlign: 'center' }}>{quantity}</span>
+        <button onClick={increment} disabled={isLoading} style={{ flex: 1, height: '100%', background: 'none', border: 'none', color: '#fff', cursor: isLoading ? 'not-allowed' : 'pointer', fontSize: '1.5rem', opacity: isLoading ? 0.7 : 1 }}>+</button>
+      </div>
+    );
+  }
 
   return (
     <button
-      onClick={() => addToCart(variantId, 1, true)}
+      onClick={handleAdd}
       disabled={disabled || isLoading}
       className="btn-add-to-cart-premium"
       style={{
         opacity: (disabled || isLoading) ? 0.7 : 1,
         width: '100%',
-        padding: '1.2rem 1rem',
-        backgroundColor: '#1b3021', // Dark green like screenshot
+        height: '3.5rem',
+        backgroundColor: '#1b3021',
         border: 'none',
         borderRadius: '0',
         color: '#fff',

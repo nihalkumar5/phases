@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
-import { createCart, getCart as fetchCart, addToExistingCart } from '@/lib/shopify';
+import { createCart, getCart as fetchCart, addToExistingCart, updateCartLines } from '@/lib/shopify';
 
 const CartContext = createContext();
 
@@ -50,7 +50,26 @@ export function CartProvider({ children }) {
         setIsCartOpen(true);
       }
     } catch (err) {
-      console.error(err);
+      console.error('Error adding to cart:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateQuantity = async (variantId, quantity) => {
+    try {
+      setIsLoading(true);
+      const currentCartId = localStorage.getItem('shopify_cart_id');
+      if (!currentCartId || !cart) return;
+
+      const lineItem = cart.lines.edges.find(e => e.node.merchandise.id === variantId);
+      if (lineItem) {
+        const lineId = lineItem.node.id;
+        const newCart = await updateCartLines(currentCartId, [{ id: lineId, quantity }]);
+        setCart(newCart);
+      }
+    } catch (error) {
+      console.error('Error updating quantity:', error);
     } finally {
       setIsLoading(false);
     }
@@ -60,7 +79,7 @@ export function CartProvider({ children }) {
   const closeCart = () => setIsCartOpen(false);
 
   return (
-    <CartContext.Provider value={{ cart, isCartOpen, isLoading, addToCart, openCart, closeCart }}>
+    <CartContext.Provider value={{ cart, isCartOpen, isLoading, addToCart, updateQuantity, openCart, closeCart }}>
       {children}
     </CartContext.Provider>
   );
