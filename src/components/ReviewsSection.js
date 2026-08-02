@@ -2,97 +2,164 @@ import React from 'react';
 
 const reviews = [
   {
-    name: "Harshit",
-    product: "Handcrafted Floral Puppy Soft Toy",
-    text: "I absolutely loved this handmade floral puppy! The fabric print is beautiful, the stitching is excellent, and it's so soft.",
-    image: "/cat_soft_toys.png"
+    name: "Harshit R.",
+    date: "12/08/2026",
+    product: "FLORAL PUPPY SOFT TOY",
+    text: "I absolutely loved this handmade floral puppy! The fabric print is beautiful, the stitching is excellent, and it's so soft."
   },
   {
-    name: "Ahalya Devi",
-    product: "Blush Bloom Candle",
-    text: "I bulk ordered Daisy and Sun & Moon candles, and received 3 rose candles as well! They smell heavenly and the packaging is so cute.",
-    image: "/cat_candles.png"
+    name: "Ahalya D.",
+    date: "05/08/2026",
+    product: "BLUSH BLOOM CANDLE",
+    text: "They smell heavenly and the packaging is so cute. I bulk ordered and absolutely love the scents!"
   },
   {
-    name: "Yuvraj Kumar Pandit",
-    product: "Midnight Orchid Soy Candle",
-    text: "I absolutely love this candle! The Midnight Orchid fragrance feels rich, calming, and sets the perfect mood for evenings.",
-    image: "/cat_freshner.png"
+    name: "Yuvraj P.",
+    date: "28/07/2026",
+    product: "MIDNIGHT ORCHID CANDLE",
+    text: "I absolutely love this candle! The Midnight Orchid fragrance feels rich, calming, and sets the perfect mood for evenings."
   },
   {
-    name: "Tejeshwani",
-    product: "Phases Handcrafted",
-    text: "I recently received this candle and absolutely loved it. The fragrance is rich, warm, and smells just like a freshly made coffee latte without being too strong. It arrived well-packaged, looks amazing in my room.",
-    image: "/cat_hampers.png"
+    name: "Tejeshwani K.",
+    date: "15/07/2026",
+    product: "COFFEE LATTE CANDLE",
+    text: "The fragrance is rich, warm, and smells just like a freshly made coffee latte without being too strong."
+  },
+  {
+    name: "Ananya S.",
+    date: "02/07/2026",
+    product: "SOFT TOY COMBO",
+    text: "Beautiful craftsmanship and quick delivery. The attention to detail in the packaging made it feel really premium."
   }
 ];
 
 export default function ReviewsSection() {
   return (
-    <section style={{ padding: '6rem 2rem', backgroundColor: 'var(--bg-cream)' }}>
-      <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+    <section style={{ padding: '4rem 0', backgroundColor: '#fff', width: '100%' }}>
+      {/* Header part */}
+      <div style={{ textAlign: 'center', marginBottom: '3rem', padding: '0 1.5rem' }}>
+        <h2 style={{ 
+          fontSize: '2.2rem', 
+          fontFamily: 'var(--font-serif)', 
+          fontWeight: 400,
+          color: '#111',
+          marginBottom: '1.5rem'
+        }}>
+          Our customer <span style={{ fontStyle: 'italic', fontWeight: 300 }}>reviews</span>
+        </h2>
         
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.5rem', color: 'var(--text-espresso)' }}>Customers Are Saying</h2>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginTop: '1rem' }}>
-            <div style={{ display: 'flex', color: '#111' }}>
-              {'★★★★★'.split('').map((star, i) => <span key={i}>{star}</span>)}
-            </div>
-            <span style={{ fontSize: '1.1rem', fontWeight: '500', color: 'var(--text-espresso)' }}>5.00</span>
-            <span style={{ fontSize: '0.9rem', color: '#64748b' }}>(7)</span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.9rem', color: '#059669', marginLeft: '0.5rem', fontWeight: '500' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              Verified
-            </span>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ 
+            fontSize: '3.5rem', 
+            fontFamily: 'var(--font-serif)', 
+            fontWeight: 400,
+            lineHeight: 1,
+            color: '#111',
+            marginBottom: '0.5rem'
+          }}>
+            4.8<span style={{ fontSize: '2rem' }}>/5</span>
+          </div>
+          
+          <div style={{ color: '#111', fontSize: '1.2rem', letterSpacing: '2px', marginBottom: '0.5rem' }}>
+            ★★★★★
+          </div>
+          
+          <div style={{ fontSize: '0.8rem', color: '#666', fontFamily: 'var(--font-sans)' }}>
+            Based on 350 reviews
           </div>
         </div>
-
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
-          gap: '2rem' 
-        }}>
-          {reviews.map((review, index) => (
-            <div key={index} style={{ 
-              backgroundColor: 'var(--promo-bg)', 
-              borderRadius: '1rem', 
-              overflow: 'hidden',
-              border: '1px solid rgba(212, 175, 55, 0.1)',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
-              display: 'flex',
-              flexDirection: 'column'
-            }}>
-              {review.image && (
-                <div style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
-                  <img src={review.image} alt={review.product} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-              )}
-              <div style={{ padding: '2rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <p style={{ 
-                  color: 'var(--text-espresso)', 
-                  fontStyle: 'italic', 
-                  fontSize: '1.05rem',
-                  lineHeight: '1.6',
-                  marginBottom: '1.5rem',
-                  flex: 1
-                }}>
-                  "{review.text}"
-                </p>
-                <div style={{ display: 'flex', color: 'var(--accent-sage)', marginBottom: '0.5rem', letterSpacing: '2px' }}>
-                  ★★★★★
-                </div>
-                <div style={{ fontWeight: '600', color: 'var(--accent-sage)', fontSize: '1rem', marginBottom: '0.2rem' }}>
-                  {review.name}
-                </div>
-                <div style={{ color: 'rgba(253, 251, 247, 0.6)', fontSize: '0.85rem' }}>
-                  {review.product}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        
       </div>
+      
+      {/* Reviews Carousel */}
+      <div style={{
+        display: 'flex',
+        overflowX: 'auto',
+        scrollSnapType: 'x mandatory',
+        WebkitOverflowScrolling: 'touch',
+        scrollbarWidth: 'none', 
+        msOverflowStyle: 'none',
+        borderTop: '1px solid #eee',
+        borderBottom: '1px solid #eee'
+      }}
+      className="hide-scroll"
+      >
+        {reviews.map((review, idx) => (
+          <div key={idx} style={{
+            flex: '0 0 85%',
+            maxWidth: '400px',
+            scrollSnapAlign: 'start',
+            padding: '2rem 1.5rem',
+            borderRight: '1px solid #eee',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            minHeight: '220px'
+          }}>
+            <div>
+              <div style={{ color: '#111', fontSize: '1rem', letterSpacing: '1px', marginBottom: '1rem' }}>
+                ★★★★★
+              </div>
+              <p style={{ 
+                fontFamily: 'var(--font-sans)', 
+                fontSize: '0.95rem', 
+                color: '#333', 
+                lineHeight: 1.6,
+                fontWeight: 400
+              }}>
+                "{review.text}"
+              </p>
+            </div>
+            
+            <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+              <span style={{ 
+                fontFamily: 'var(--font-sans)', 
+                fontSize: '0.9rem', 
+                fontWeight: 700, 
+                color: '#111' 
+              }}>
+                {review.name}
+              </span>
+              <span style={{ 
+                fontFamily: 'var(--font-sans)', 
+                fontSize: '0.75rem', 
+                color: '#888' 
+              }}>
+                {review.date}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Brand Promise Section */}
+      <div style={{ padding: '4rem 1.5rem', textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
+        <h3 style={{ 
+          fontSize: '1.8rem', 
+          fontFamily: 'var(--font-serif)', 
+          fontWeight: 400,
+          color: '#111',
+          marginBottom: '1.5rem'
+        }}>
+          Our promise: <span style={{ fontStyle: 'italic', fontWeight: 300 }}>delight in every detail.</span>
+        </h3>
+        <p style={{ 
+          fontFamily: 'var(--font-sans)', 
+          fontSize: '0.9rem', 
+          color: '#555', 
+          lineHeight: 1.8,
+          fontWeight: 400
+        }}>
+          More than just a candle or a soft toy, Phases Handcrafted is about creating unique experiences. 
+          Every piece is carefully handmade to spark joy, comfort, and a touch of magic in your everyday life. 
+          From the scent to the stitch, it's crafted with love.
+        </p>
+      </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        .hide-scroll::-webkit-scrollbar {
+          display: none;
+        }
+      `}} />
     </section>
   );
 }

@@ -2,29 +2,35 @@
 
 import { useCart } from './CartContext';
 
-export default function AddToCartButton({ variantId, disabled }) {
+export default function AddToCartButton({ variantId, disabled, priceFormatted }) {
   const { addToCart, isLoading } = useCart();
 
   return (
     <button
       onClick={() => addToCart(variantId, 1)}
       disabled={disabled || isLoading}
-      className="btn-add-to-cart-flat"
+      className="btn-add-to-cart-premium"
       style={{
         opacity: (disabled || isLoading) ? 0.7 : 1,
         width: '100%',
-        padding: '0.8rem 1rem',
-        backgroundColor: 'transparent',
-        border: '1px solid rgba(212, 175, 55, 0.4)',
-        color: 'var(--text-espresso)',
-        fontSize: '0.85rem',
-        fontWeight: '500',
-        textTransform: 'none',
+        padding: '1.2rem 1rem',
+        backgroundColor: '#1b3021', // Dark green like screenshot
+        border: 'none',
+        borderRadius: '0',
+        color: '#fff',
+        fontSize: '1.05rem',
+        fontWeight: '600',
+        textTransform: 'uppercase',
+        letterSpacing: '0.05em',
         cursor: (disabled || isLoading) ? 'not-allowed' : 'pointer',
-        transition: 'all 0.2s ease'
+        transition: 'all 0.2s ease',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '0.5rem'
       }}
     >
-      {isLoading ? 'Adding to Cart...' : 'Add To Cart'}
+      {isLoading ? 'Adding...' : 'ADD TO CART'} {priceFormatted && ` / ${priceFormatted}`}
     </button>
   );
 }

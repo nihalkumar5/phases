@@ -11,7 +11,7 @@
 
 html, body {
   width: 100%;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
 }
 
 @layer base {
@@ -37,16 +37,18 @@ html, body {
     --ring: 11 44% 59%;
     --radius: 2rem;
     
-    /* Midnight Luxury Theme */
-    --bg-cream: #0C0F12;
-    --text-espresso: #FDFBF7;
-    --accent-sage: #D4AF37; /* Gold */
-    --accent-terra: #B89932; /* Deep Gold */
-    --promo-bg: #161A1F;
-    --promo-text: #D4AF37;
-    --ticker-bg: #D4AF37;
-    --ticker-text: #0C0F12;
-    --shadow-diffused: 0 20px 40px -10px rgba(0,0,0,0.5);
+    /* Earthy Two Leaves Tea Theme */
+    --bg-cream: #EAF0D9; /* Pastel Green Background */
+    --bg-offwhite: #F9F7EF; /* Creamy white for cards */
+    --text-espresso: #2D3A31; /* Deep forest green / almost black */
+    --accent-sage: #6E9B66; /* Match green */
+    --accent-terra: #C2825B; /* Peach/Orange for contrast */
+    --accent-purple: #342D59; /* Navy/Purple for buttons */
+    --promo-bg: #F9F7EF;
+    --promo-text: #342D59;
+    --ticker-bg: #E3D966; /* Yellow ticker */
+    --ticker-text: #2D3A31;
+    --shadow-diffused: 0 20px 40px -10px rgba(0,0,0,0.08);
     
     --font-sans: var(--font-sans, 'Outfit', sans-serif);
     --font-serif: var(--font-serif, 'Playfair Display', serif);
@@ -524,7 +526,7 @@ html, body {
 
 .quiz-title {
   font-family: var(--font-serif);
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 400;
   color: var(--text-espresso);
   line-height: 1.1;
@@ -532,7 +534,7 @@ html, body {
 }
 
 .quiz-subtitle {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
   opacity: 0.8;
   margin-bottom: 3.5rem;
   line-height: 1.6;
@@ -1702,3 +1704,58 @@ html, body {
   background-color: #f9f9f9 !important;
 }
 
+/* Responsive Visibility Classes */
+.desktop-only {
+  display: block;
+}
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+  .mobile-only {
+    display: block;
+  }
+}
+
+/* Categories Grid */
+.categories-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .categories-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.category-card:hover .category-img {
+  transform: scale(1.05);
+}
+
+.category-card:hover .category-label {
+  letter-spacing: 0.2em;
+  border-bottom-width: 3px;
+}
+
+/* Center video reels on desktop */
+@media (min-width: 768px) {
+  .video-reels-container {
+    justify-content: center;
+  }
+}
+
+/* Cart Drawer Full Screen Mobile */
+.cart-drawer {
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .cart-drawer {
+    max-width: 480px;
+  }
+}

@@ -9,6 +9,14 @@ export default function Header({ theme = 'light' }) {
   const itemCount = cart?.lines?.edges?.reduce((acc, line) => acc + line.node.quantity, 0) || 0;
 
   const [scrolled, setScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const categories = [
+    { label: 'Candles', img: 'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=400&q=80' },
+    { label: 'Freshner', img: 'https://images.unsplash.com/photo-1572979213813-9118e6ecbecc?w=400&q=80' },
+    { label: 'Soft Toys', img: 'https://images.unsplash.com/photo-1558522195-e1201b090344?w=400&q=80' },
+    { label: 'Hampers', img: 'https://images.unsplash.com/photo-1513885045260-6b3086b24c17?w=400&q=80' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,99 +33,197 @@ export default function Header({ theme = 'light' }) {
   const isDarkText = theme === 'light' || theme === 'transparent-dark';
   
   return (
-    <div style={{ 
-      position: 'fixed', 
-      top: 0, 
-      width: '100%',
-      zIndex: 50, 
-      backgroundColor: (!scrolled && isTransparent) ? 'transparent' : (isTransparent ? 'rgba(0, 0, 0, 0.02)' : 'rgba(255, 255, 255, 0.7)'),
-      backdropFilter: (!scrolled && isTransparent) ? 'none' : 'blur(12px)',
-      WebkitBackdropFilter: (!scrolled && isTransparent) ? 'none' : 'blur(12px)',
-      color: 'var(--text-espresso)',
-      transition: 'all 0.4s ease'
-    }}>
+    <header>
       {/* Announcement Bar */}
       <div style={{
-        backgroundColor: 'var(--ticker-bg, #D4AF37)', 
-        color: '#111', 
-        padding: '0.6rem 2rem', 
-        fontSize: '0.85rem',
-        fontWeight: '500',
+        backgroundColor: '#1b2c13',
+        color: '#ffffff', 
+        padding: '0.6rem 1rem', 
+        fontSize: '0.65rem',
+        fontWeight: '700',
         display: 'flex', 
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
-        borderBottom: '1px solid rgba(0,0,0,0.05)',
-        letterSpacing: '0.02em',
-        display: scrolled ? 'none' : 'flex'
+        letterSpacing: '0.1em',
+        textTransform: 'uppercase'
       }}>
-        <button style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <div style={{ textAlign: 'center', flex: 1 }}>
-          Up to 40% OFF on selected products + Extra 10% off on your First Order
-          <div style={{ fontStyle: 'italic', opacity: 0.8, fontSize: '0.75rem', marginTop: '0.1rem' }}>(Discount applied automatically at checkout)</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          SCENT OF THE MONTH OFFER <span style={{ fontSize: '0.8rem' }}>🤍</span>
         </div>
-        <button style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg></button>
       </div>
       
       {/* Main Header */}
       <nav 
-        className={`header-nav ${scrolled ? 'header-scrolled glass-panel' : ''}`}
         style={{ 
-          padding: scrolled ? '1.2rem 1.5rem' : '2rem 1.5rem', 
-          borderBottom: scrolled ? 'none' : (isTransparent ? '2px solid rgba(255, 255, 255, 0.5)' : '1px solid rgba(0, 0, 0, 0.1)'),
-          transition: 'all 0.4s ease'
+          position: 'sticky',
+          top: 0,
+          zIndex: 50,
+          backgroundColor: '#ffffff',
+          color: '#111',
+          borderBottom: '1px solid rgba(0,0,0,0.05)',
+          padding: scrolled ? '0.8rem 1.5rem' : '1.2rem 1.5rem', 
+          transition: 'all 0.3s ease',
+          display: 'flex',
+          width: '100%',
+          justifyContent: 'space-between',
+          alignItems: 'center'
         }}
       >
-        
-        {/* Left Side: Logo & Nav */}
-        <div className="header-left">
-          <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
-            <img src="/logo.png" alt="Phases Handcrafted" style={{ height: '40px', objectFit: 'contain' }} />
-          </Link>
           
-          <div className="header-links">
-            <div className="header-dropdown-container" style={{ position: 'relative', display: 'flex', alignItems: 'center', height: '100%' }} onMouseEnter={(e) => e.currentTarget.querySelector('.dropdown-content').style.opacity = '1'} onMouseLeave={(e) => e.currentTarget.querySelector('.dropdown-content').style.opacity = '0'}>
-              <Link href="#shop" style={{ color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem' }} className="header-link">
-                shop 
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
-              </Link>
-              <div className="dropdown-content glass-panel" style={{ 
-                position: 'absolute', top: '100%', left: '0', marginTop: '1rem',
-                color: 'var(--text-espresso)', 
-                minWidth: '180px', borderRadius: '12px', padding: '0.5rem',
-                boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-                opacity: 0, transition: 'opacity 0.2s', pointerEvents: 'none',
-                display: 'flex', flexDirection: 'column', gap: '0.2rem'
-              }}>
-                {/* Invisible bridge for hover */}
-                <div style={{ position: 'absolute', top: '-1rem', left: 0, right: 0, height: '1rem' }}></div>
-                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Candles</Link>
-                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Rakhi</Link>
-                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Soft Toys</Link>
-                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Sale</Link>
-                <Link href="#products" style={{ padding: '0.75rem 1rem', textDecoration: 'none', color: 'inherit', borderRadius: '8px', fontSize: '0.9rem' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f5f5f7'; e.currentTarget.parentElement.style.pointerEvents = 'auto'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.parentElement.style.pointerEvents = 'none'; }}>Hamper</Link>
-              </div>
-            </div>
-            <Link href="#about" style={{ color: 'inherit', textDecoration: 'none' }} className="header-link">about</Link>
-            <Link href="#contact" style={{ color: 'inherit', textDecoration: 'none' }} className="header-link">contact</Link>
-          </div>
+        {/* Left Side: Hamburger & Search */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1 }}>
+          <button onClick={() => setIsMenuOpen(true)} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+          </button>
+          {/* MENU Text is hidden on mobile via CSS, but we use a span to avoid overriding display property */}
+          <span className="desktop-only" style={{ fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer' }}>MENU</span>
+          <button className="mobile-only" style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', marginTop: '4px' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </button>
+        </div>
+
+        {/* Center: Logo */}
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+            <img src="/logo.png" alt="Phases Handcrafted" style={{ height: '65px', objectFit: 'contain' }} />
+          </Link>
         </div>
 
         {/* Right Side: Icons */}
-        <div className="header-icons">
-          <button style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }} className="header-link">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, justifyContent: 'flex-end' }}>
+          <span className="desktop-only" style={{ cursor: 'pointer' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-          </button>
-          <button style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }} className="header-link">
+          </span>
+          <span className="desktop-only" style={{ cursor: 'pointer' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </button>
-          <button onClick={openCart} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem' }} className="header-link">
+          </span>
+          <button onClick={openCart} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            <span style={{ fontSize: '0.8rem', fontWeight: 600, backgroundColor: (!scrolled && isTransparent && !isDarkText) ? '#fff' : '#111', color: (!scrolled && isTransparent && !isDarkText) ? '#111' : '#fff', borderRadius: '50%', width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, backgroundColor: '#e0e0e0', color: '#111', borderRadius: '50%', width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {itemCount}
             </span>
           </button>
         </div>
       </nav>
-    </div>
+
+      {/* Mobile Menu Drawer */}
+      {isMenuOpen && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 100,
+          display: 'flex'
+        }}>
+          {/* Overlay */}
+          <div 
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)' }} 
+            onClick={() => setIsMenuOpen(false)}
+          />
+          
+          {/* Drawer */}
+          <div style={{
+            position: 'relative',
+            width: '85%',
+            maxWidth: '400px',
+            backgroundColor: '#fff',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            overflowY: 'auto'
+          }}>
+            {/* Close Button */}
+            <button 
+              onClick={() => setIsMenuOpen(false)}
+              style={{
+                background: 'none', border: 'none', padding: '1rem', cursor: 'pointer', alignSelf: 'flex-start'
+              }}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+
+            {/* Top Image Cards Row */}
+            <div style={{
+              display: 'flex',
+              overflowX: 'auto',
+              gap: '0.5rem',
+              padding: '0 1rem 1.5rem 1rem',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none'
+            }} className="hide-scroll">
+              {categories.map((cat, idx) => (
+                <Link href="#products" key={idx} onClick={() => setIsMenuOpen(false)} style={{
+                  flex: '0 0 42%',
+                  aspectRatio: '3/4',
+                  position: 'relative',
+                  textDecoration: 'none'
+                }}>
+                  <img src={cat.img} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, width: '100%',
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)',
+                    color: '#fff',
+                    padding: '0.5rem',
+                    textAlign: 'center',
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    letterSpacing: '0.05em'
+                  }}>
+                    {cat.label}
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            {/* Main Links */}
+            <div style={{ padding: '0 1.5rem', display: 'flex', flexDirection: 'column' }}>
+              {['Candles', 'Freshner', 'Soft Toys', 'Hampers', 'Gift Sets', 'All Products'].map((item, i) => (
+                <Link href="#products" key={i} onClick={() => setIsMenuOpen(false)} style={{
+                  padding: '1.2rem 0',
+                  borderBottom: '1px solid #f0f0f0',
+                  textDecoration: 'none',
+                  color: '#111',
+                  fontFamily: 'var(--font-sans)',
+                  fontWeight: 600,
+                  fontSize: '0.95rem'
+                }}>
+                  {item}
+                </Link>
+              ))}
+            </div>
+
+            {/* Secondary Links & Footer */}
+            <div style={{ padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: 'auto' }}>
+              {['My Account', 'FAQ', 'Client Reviews', 'Contact'].map((item, i) => (
+                <Link href="#" key={i} style={{
+                  textDecoration: 'none',
+                  color: '#666',
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '0.85rem'
+                }}>
+                  {item}
+                </Link>
+              ))}
+              
+              <div style={{ display: 'flex', gap: '2rem', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #f0f0f0', color: '#666', fontSize: '0.85rem', fontFamily: 'var(--font-sans)' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Contact
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style dangerouslySetInnerHTML={{__html: `
+        .hide-scroll::-webkit-scrollbar {
+          display: none;
+        }
+      `}} />
+    </header>
   );
 }
