@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
-import { createCart, getCart as fetchCart } from '@/lib/shopify';
+import { createCart, getCart as fetchCart, addToExistingCart } from '@/lib/shopify';
 
 const CartContext = createContext();
 
@@ -42,10 +42,7 @@ export function CartProvider({ children }) {
         localStorage.setItem('shopify_cart_id', newCart.id);
         setCart(newCart);
       } else {
-        // If we have a cart, we'd ideally call cartLinesAdd mutation here.
-        // For brevity in this Apple-level demo, we'll create a new cart.
-        newCart = await createCart(variantId, quantity);
-        localStorage.setItem('shopify_cart_id', newCart.id);
+        newCart = await addToExistingCart(currentCartId, variantId, quantity);
         setCart(newCart);
       }
       
