@@ -1,6 +1,7 @@
 import { getProduct, getProducts } from '@/lib/shopify';
 import Header from '@/components/Header';
 import AddToCartButton from '@/components/AddToCartButton';
+import UpsellButton from '@/components/UpsellButton';
 import ProductAccordion from '@/components/ProductAccordion';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -89,9 +90,10 @@ export default async function ProductPage({ params }) {
                     <p style={{ fontSize: '0.85rem', fontWeight: 600, margin: 0, color: '#111' }}>{relatedProducts[0].node.title}</p>
                   </div>
                 </div>
-                <button style={{ backgroundColor: '#eaeaea', border: 'none', padding: '0.4rem 0.8rem', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', color: '#111' }}>
-                  ADD / {new Intl.NumberFormat('en-IN', { style: 'currency', currency: relatedProducts[0].node.priceRange.maxVariantPrice.currencyCode, maximumFractionDigits: 0 }).format(relatedProducts[0].node.priceRange.maxVariantPrice.amount)}
-                </button>
+                <UpsellButton 
+                  variantId={relatedProducts[0].node.variants.edges[0]?.node?.id} 
+                  priceFormatted={new Intl.NumberFormat('en-IN', { style: 'currency', currency: relatedProducts[0].node.priceRange.maxVariantPrice.currencyCode, maximumFractionDigits: 0 }).format(relatedProducts[0].node.priceRange.maxVariantPrice.amount)} 
+                />
               </div>
             </div>
           )}

@@ -1,10 +1,22 @@
 'use client';
 
 import { useCart } from './CartContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import UpsellButton from './UpsellButton';
 
 export default function Cart() {
   const { cart, isCartOpen, closeCart, isLoading } = useCart();
+  const [upsells, setUpsells] = useState([]);
+
+  useEffect(() => {
+    if (isCartOpen && upsells.length === 0) {
+      import('@/lib/shopify').then(mod => {
+        mod.getProducts().then(products => {
+          setUpsells(products || []);
+        }).catch(err => console.error(err));
+      });
+    }
+  }, [isCartOpen, upsells.length]);
 
   // Prevent scrolling when cart is open
   useEffect(() => {
@@ -136,7 +148,44 @@ export default function Cart() {
                 </div>
               ))}
               
-              {/* Addons / Upsell Section removed since there are no luxury matches */}
+              {/* Addons / Upsell Section */}
+              {upsells.length > 0 && (() => {
+                const cartHandles = cart.lines.edges.map(line => line.node.merchandise.product.handle);
+                const availableUpsells = upsells.filter(p => !cartHandles.includes(p.node.handle)).slice(0, 2);
+                
+                if (availableUpsells.length === 0) return null;
+
+                return (
+                  <div style={{ marginTop: '1rem', backgroundColor: '#f9f9f9', padding: '1.2rem', borderRadius: '8px' }}>
+                    <p style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#555', margin: '0 0 1rem 0' }}>Complete your order with</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      {availableUpsells.map((upsell) => {
+                        const variant = upsell.node.variants.edges[0]?.node;
+                        const price = upsell.node.priceRange.maxVariantPrice;
+                        const formattedPrice = new Intl.NumberFormat('en-IN', { style: 'currency', currency: price.currencyCode, maximumFractionDigits: 0 }).format(price.amount);
+                        
+                        return (
+                          <div key={upsell.node.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', flex: 1 }}>
+                              <div style={{ width: '45px', height: '45px', backgroundColor: '#eee', borderRadius: '4px', overflow: 'hidden', flexShrink: 0 }}>
+                                {upsell.node.images.edges[0]?.node?.url && (
+                                  <img src={upsell.node.images.edges[0].node.url} alt={upsell.node.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                )}
+                              </div>
+                              <div style={{ paddingRight: '0.5rem' }}>
+                                <p style={{ fontSize: '0.85rem', fontWeight: 600, margin: '0 0 0.2rem 0', color: '#111', lineHeight: 1.2 }}>{upsell.node.title}</p>
+                              </div>
+                            </div>
+                            <div style={{ flexShrink: 0 }}>
+                              <UpsellButton variantId={variant?.id} priceFormatted={formattedPrice} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })()}
             </>
           )}
         </div>
