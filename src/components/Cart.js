@@ -136,23 +136,7 @@ export default function Cart() {
                 </div>
               ))}
               
-              {/* Addons / Upsell Section */}
-              <div style={{ marginTop: '1rem', backgroundColor: '#f9f9f9', padding: '1rem', borderRadius: '8px' }}>
-                <p style={{ fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#555', margin: '0 0 1rem 0' }}>Complete your order with</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-                    <div style={{ width: '40px', height: '40px', backgroundColor: '#eee', borderRadius: '50%', overflow: 'hidden' }}>
-                      <img src="https://images.unsplash.com/photo-1542293787391-72922119eb31?w=100&q=80" alt="Matches" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                    <div>
-                      <p style={{ fontSize: '0.85rem', fontWeight: 600, margin: 0 }}>Luxury Matches</p>
-                    </div>
-                  </div>
-                  <button style={{ backgroundColor: '#eaeaea', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer' }}>
-                    ADD / ₹150
-                  </button>
-                </div>
-              </div>
+              {/* Addons / Upsell Section removed since there are no luxury matches */}
             </>
           )}
         </div>

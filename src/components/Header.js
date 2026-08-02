@@ -10,6 +10,7 @@ export default function Header({ theme = 'light' }) {
 
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const categories = [
     { label: 'Candles', img: 'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=400&q=80' },
@@ -77,7 +78,7 @@ export default function Header({ theme = 'light' }) {
           </button>
           {/* MENU Text is hidden on mobile via CSS, but we use a span to avoid overriding display property */}
           <span className="desktop-only" style={{ fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer' }}>MENU</span>
-          <button className="mobile-only" style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', marginTop: '4px' }}>
+          <button onClick={() => setIsSearchOpen(true)} className="mobile-only" style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', marginTop: '4px' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
           </button>
         </div>
@@ -91,7 +92,7 @@ export default function Header({ theme = 'light' }) {
 
         {/* Right Side: Icons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1, justifyContent: 'flex-end' }}>
-          <span className="desktop-only" style={{ cursor: 'pointer' }}>
+          <span onClick={() => setIsSearchOpen(true)} className="desktop-only" style={{ cursor: 'pointer' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
           </span>
           <span className="desktop-only" style={{ cursor: 'pointer' }}>
@@ -105,6 +106,36 @@ export default function Header({ theme = 'light' }) {
           </button>
         </div>
       </nav>
+
+      {/* Search Overlay */}
+      <div style={{
+        position: 'fixed', inset: 0, zIndex: 9999,
+        backgroundColor: 'rgba(255,255,255,0.95)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        opacity: isSearchOpen ? 1 : 0,
+        pointerEvents: isSearchOpen ? 'auto' : 'none',
+        transition: 'opacity 0.3s ease',
+        padding: '2rem'
+      }}>
+        <button onClick={() => setIsSearchOpen(false)} style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: 'none', border: 'none', cursor: 'pointer' }}>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <div style={{ width: '100%', maxWidth: '600px', position: 'relative' }}>
+          <input 
+            type="text" 
+            placeholder="Search our candles..." 
+            style={{
+              width: '100%', border: 'none', borderBottom: '2px solid #111',
+              backgroundColor: 'transparent', padding: '1rem 0',
+              fontSize: '2rem', fontFamily: 'var(--font-serif)', outline: 'none', color: '#111'
+            }} 
+            autoFocus={isSearchOpen}
+          />
+          <button style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer' }}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </button>
+        </div>
+      </div>
 
       {/* Mobile Menu Drawer */}
       {isMenuOpen && (

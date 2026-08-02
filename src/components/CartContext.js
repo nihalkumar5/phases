@@ -26,7 +26,7 @@ export function CartProvider({ children }) {
     }
   }, []);
 
-  const addToCart = async (variantId, quantity = 1) => {
+  const addToCart = async (variantId, quantity = 1, openCartAfter = false) => {
     setIsLoading(true);
     try {
       // For simplicity in this example, we always create a new cart line if one doesn't exist,
@@ -49,7 +49,9 @@ export function CartProvider({ children }) {
         setCart(newCart);
       }
       
-      setIsCartOpen(true);
+      if (openCartAfter) {
+        setIsCartOpen(true);
+      }
     } catch (err) {
       console.error(err);
     } finally {

@@ -43,13 +43,13 @@ export default async function ProductPage({ params }) {
       <div className="pdp-container" style={{ maxWidth: '1440px', margin: '0 auto', padding: '2rem 1.5rem', display: 'grid', gap: '3rem', alignItems: 'start' }}>
         
         {/* Images Column */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
+        <div className="pdp-images-container">
           {product.images.edges.map(({ node }, index) => (
-            <div key={index} style={{ width: '100%', backgroundColor: '#f9f9f9', overflow: 'hidden' }}>
+            <div key={index} className="pdp-image-slide" style={{ backgroundColor: '#f9f9f9', overflow: 'hidden' }}>
               <img 
                 src={node.url} 
                 alt={node.altText || product.title} 
-                style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
+                style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }}
               />
             </div>
           ))}
@@ -117,7 +117,7 @@ export default async function ProductPage({ params }) {
           {/* En Detail Accordions */}
           <div style={{ marginBottom: '3rem' }}>
             <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', fontWeight: 400, color: '#111', marginBottom: '1.5rem' }}>
-              En détail.
+              In detail.
             </h2>
             
             <ProductAccordion title="DESCRIPTION" defaultOpen={true}>
@@ -219,7 +219,7 @@ export default async function ProductPage({ params }) {
       <section style={{ backgroundColor: '#F8F6F0', padding: '5rem 1.5rem', marginTop: '4rem' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.5rem', fontWeight: 400, color: '#111', marginBottom: '4rem' }}>
-            Le lot presque parfait 🫶
+            The Perfect Bundle 🫶
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '3rem' }}>
             <div>

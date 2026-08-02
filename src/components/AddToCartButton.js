@@ -7,7 +7,7 @@ export default function AddToCartButton({ variantId, disabled, priceFormatted })
 
   return (
     <button
-      onClick={() => addToCart(variantId, 1)}
+      onClick={() => addToCart(variantId, 1, true)}
       disabled={disabled || isLoading}
       className="btn-add-to-cart-premium"
       style={{
