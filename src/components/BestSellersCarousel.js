@@ -1,7 +1,10 @@
 'use client';
 import Link from 'next/link';
+import { useCart } from './CartContext';
 
 export default function BestSellersCarousel({ products }) {
+  const { addToCart, isLoading } = useCart();
+
   if (!products || products.length === 0) return null;
 
   return (
@@ -33,6 +36,7 @@ export default function BestSellersCarousel({ products }) {
           const { node } = product;
           const image = node.images.edges[0]?.node;
           const price = node.priceRange.maxVariantPrice;
+          const variantId = node.variants?.edges?.[0]?.node?.id || node.id;
           
           return (
             <div key={node.id} style={{
@@ -58,6 +62,25 @@ export default function BestSellersCarousel({ products }) {
                   ) : (
                     <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No Image</div>
                   )}
+
+                  {/* Quick Add Overlay */}
+                  <button 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      addToCart(variantId, 1, true);
+                    }}
+                    disabled={isLoading}
+                    style={{
+                      position: 'absolute', bottom: '15px', left: '5%', width: '90%',
+                      backgroundColor: 'rgba(255,255,255,0.95)', color: '#111', border: '1px solid #111',
+                      padding: '0.6rem', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase',
+                      cursor: 'pointer', borderRadius: '4px', zIndex: 10,
+                      boxShadow: '0 4px 10px rgba(0,0,0,0.05)'
+                    }}
+                  >
+                    {isLoading ? 'Adding...' : 'Quick Add +'}
+                  </button>
                   
                   {/* Badges Overlay */}
                   <div style={{ 

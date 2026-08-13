@@ -30,7 +30,7 @@ export async function shopifyFetch({ query, variables }) {
 export async function getProducts() {
   const query = `
     query getProducts {
-      products(first: 10) {
+      products(first: 100) {
         edges {
           node {
             id
@@ -101,18 +101,22 @@ export async function getProduct(handle) {
   return response.body?.data?.product;
 }
 
-export async function createCart(variantId, quantity) {
+export async function createCart(linesInput) {
   const query = `
     mutation cartCreate($input: CartInput!) {
       cartCreate(input: $input) {
         cart {
           id
           checkoutUrl
-          lines(first: 10) {
+          lines(first: 50) {
             edges {
               node {
                 id
                 quantity
+                attributes {
+                  key
+                  value
+                }
                 merchandise {
                   ... on ProductVariant {
                     id
@@ -132,10 +136,22 @@ export async function createCart(variantId, quantity) {
       }
     }
   `;
+  
+  let lines = [];
+  if (Array.isArray(linesInput)) {
+    lines = linesInput.map(l => ({
+      merchandiseId: l.merchandiseId || l.variantId,
+      quantity: l.quantity,
+      attributes: l.attributes || []
+    }));
+  } else {
+    // linesInput is variantId, second arg is quantity (default 1)
+    const quantity = arguments[1] || 1;
+    lines = [{ merchandiseId: linesInput, quantity }];
+  }
+
   const variables = {
-    input: {
-      lines: [{ merchandiseId: variantId, quantity }]
-    }
+    input: { lines }
   };
   const response = await shopifyFetch({ query, variables });
   return response.body?.data?.cartCreate?.cart;
@@ -148,11 +164,15 @@ export async function addToExistingCart(cartId, variantId, quantity) {
         cart {
           id
           checkoutUrl
-          lines(first: 10) {
+          lines(first: 50) {
             edges {
               node {
                 id
                 quantity
+                attributes {
+                  key
+                  value
+                }
                 merchandise {
                   ... on ProductVariant {
                     id
@@ -180,6 +200,53 @@ export async function addToExistingCart(cartId, variantId, quantity) {
   return response.body?.data?.cartLinesAdd?.cart;
 }
 
+export async function addMultipleLinesToCart(cartId, linesInput) {
+  const query = `
+    mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+      cartLinesAdd(cartId: $cartId, lines: $lines) {
+        cart {
+          id
+          checkoutUrl
+          lines(first: 50) {
+            edges {
+              node {
+                id
+                quantity
+                attributes {
+                  key
+                  value
+                }
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    title
+                    price { amount currencyCode }
+                    product { title handle }
+                    image { url }
+                  }
+                }
+              }
+            }
+          }
+          estimatedCost {
+            totalAmount { amount currencyCode }
+          }
+        }
+      }
+    }
+  `;
+  const variables = {
+    cartId,
+    lines: linesInput.map(l => ({
+      merchandiseId: l.merchandiseId || l.variantId,
+      quantity: l.quantity,
+      attributes: l.attributes || []
+    }))
+  };
+  const response = await shopifyFetch({ query, variables });
+  return response.body?.data?.cartLinesAdd?.cart;
+}
+
 export async function updateCartLines(cartId, lines) {
   const query = `
     mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
@@ -187,11 +254,15 @@ export async function updateCartLines(cartId, lines) {
         cart {
           id
           checkoutUrl
-          lines(first: 10) {
+          lines(first: 50) {
             edges {
               node {
                 id
                 quantity
+                attributes {
+                  key
+                  value
+                }
                 merchandise {
                   ... on ProductVariant {
                     id
@@ -222,11 +293,15 @@ export async function getCart(cartId) {
       cart(id: $cartId) {
         id
         checkoutUrl
-        lines(first: 10) {
+        lines(first: 50) {
           edges {
             node {
               id
               quantity
+              attributes {
+                key
+                value
+              }
               merchandise {
                 ... on ProductVariant {
                   id

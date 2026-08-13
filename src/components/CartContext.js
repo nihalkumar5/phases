@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
-import { createCart, getCart as fetchCart, addToExistingCart, updateCartLines } from '@/lib/shopify';
+import { createCart, getCart as fetchCart, addToExistingCart, addMultipleLinesToCart, updateCartLines } from '@/lib/shopify';
 
 const CartContext = createContext();
 
@@ -29,11 +29,6 @@ export function CartProvider({ children }) {
   const addToCart = async (variantId, quantity = 1, openCartAfter = false) => {
     setIsLoading(true);
     try {
-      // For simplicity in this example, we always create a new cart line if one doesn't exist,
-      // but ideally you'd update lines if the cart already exists.
-      // Since Shopify Cart API requires cart lines update/add mutations, we'll simplify 
-      // by just creating a new cart if none exists.
-      
       let currentCartId = cart?.id;
       let newCart;
       
@@ -51,6 +46,31 @@ export function CartProvider({ children }) {
       }
     } catch (err) {
       console.error('Error adding to cart:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const addBundleToCart = async (lines, openCartAfter = true) => {
+    setIsLoading(true);
+    try {
+      let currentCartId = cart?.id;
+      let newCart;
+      
+      if (!currentCartId) {
+        newCart = await createCart(lines);
+        localStorage.setItem('shopify_cart_id', newCart.id);
+        setCart(newCart);
+      } else {
+        newCart = await addMultipleLinesToCart(currentCartId, lines);
+        setCart(newCart);
+      }
+      
+      if (openCartAfter) {
+        setIsCartOpen(true);
+      }
+    } catch (err) {
+      console.error('Error adding bundle to cart:', err);
     } finally {
       setIsLoading(false);
     }
@@ -75,11 +95,32 @@ export function CartProvider({ children }) {
     }
   };
 
+  const removeBundle = async (bundleId) => {
+    try {
+      setIsLoading(true);
+      const currentCartId = localStorage.getItem('shopify_cart_id');
+      if (!currentCartId || !cart) return;
+
+      const linesToDelete = cart.lines.edges
+        .filter(({ node }) => node.attributes?.some(attr => attr.key === '_bundle_id' && attr.value === bundleId))
+        .map(({ node }) => ({ id: node.id, quantity: 0 }));
+
+      if (linesToDelete.length > 0) {
+        const newCart = await updateCartLines(currentCartId, linesToDelete);
+        setCart(newCart);
+      }
+    } catch (error) {
+      console.error('Error removing bundle:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
   return (
-    <CartContext.Provider value={{ cart, isCartOpen, isLoading, addToCart, updateQuantity, openCart, closeCart }}>
+    <CartContext.Provider value={{ cart, isCartOpen, isLoading, addToCart, addBundleToCart, updateQuantity, removeBundle, openCart, closeCart }}>
       {children}
     </CartContext.Provider>
   );

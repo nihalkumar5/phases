@@ -213,20 +213,67 @@ export default function Header({ theme = 'light' }) {
             </div>
 
             {/* Main Links */}
-            <div style={{ padding: '0 2rem', display: 'flex', flexDirection: 'column' }}>
-              {['Candles', 'Freshner', 'Soft Toys', 'Hampers', 'Gift Sets', 'All Products'].map((item, i) => (
-                <Link href="#products" key={i} onClick={() => setIsMenuOpen(false)} className="premium-menu-link" style={{
-                  padding: '1.2rem 0',
-                  borderBottom: '1px solid #f0f0f0',
-                  textDecoration: 'none',
-                  color: '#111',
-                  fontFamily: 'var(--font-sans)',
-                  fontWeight: 600,
-                  fontSize: '1.1rem'
-                }}>
-                  {item}
-                </Link>
-              ))}
+            <div style={{ padding: '0 2rem 2rem 2rem', display: 'flex', flexDirection: 'column', gap: '1.8rem' }}>
+              
+              {/* Highlighted Builder Link */}
+              <Link href="/build-your-bundle" onClick={() => setIsMenuOpen(false)} style={{
+                padding: '1rem',
+                backgroundColor: '#1b2c13',
+                color: '#fff',
+                borderRadius: '6px',
+                textDecoration: 'none',
+                fontFamily: 'var(--font-sans)',
+                fontWeight: 700,
+                textAlign: 'center',
+                fontSize: '0.95rem',
+                letterSpacing: '0.05em',
+                boxShadow: '0 4px 12px rgba(27,44,19,0.1)'
+              }}>
+                🎁 MAKE YOUR OWN BUNDLE
+              </Link>
+
+              {/* Group: SHOP BY CATEGORY */}
+              <div>
+                <p style={{ fontSize: '0.7rem', fontWeight: 700, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.6rem 0' }}>Shop by Category</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {['Candles', 'Soft Toys', 'Keychains', 'Gift Hampers', 'All Products'].map((item, i) => (
+                    <Link href="/#products" key={i} onClick={() => setIsMenuOpen(false)} className="premium-menu-link" style={{
+                      textDecoration: 'none', color: '#111', fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: '0.95rem', padding: '0.2rem 0', display: 'block'
+                    }}>
+                      {item}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Group: SHOP BY OCCASION */}
+              <div>
+                <p style={{ fontSize: '0.7rem', fontWeight: 700, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.6rem 0' }}>Shop by Occasion</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {['Birthday', 'Anniversary', 'Raksha Bandhan', 'Romantic Gifts', 'Festive Gifts'].map((item, i) => (
+                    <Link href="/#products" key={i} onClick={() => setIsMenuOpen(false)} className="premium-menu-link" style={{
+                      textDecoration: 'none', color: '#111', fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: '0.95rem', padding: '0.2rem 0', display: 'block'
+                    }}>
+                      {item}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Group: SHOP BY BUDGET */}
+              <div>
+                <p style={{ fontSize: '0.7rem', fontWeight: 700, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.6rem 0' }}>Shop by Budget</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {['Under ₹299', 'Under ₹499', 'Under ₹999', 'Premium Gifts'].map((item, i) => (
+                    <Link href="/#products" key={i} onClick={() => setIsMenuOpen(false)} className="premium-menu-link" style={{
+                      textDecoration: 'none', color: '#111', fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: '0.95rem', padding: '0.2rem 0', display: 'block'
+                    }}>
+                      {item}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
             </div>
 
             {/* Secondary Links & Footer */}
