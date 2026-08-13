@@ -204,7 +204,7 @@ export default function Cart() {
               href={(() => {
                 try {
                   const url = new URL(cart.checkoutUrl);
-                  url.hostname = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || 'phases-handcrafted.myshopify.com';
+                  url.hostname = 'phases-handcrafted.myshopify.com';
                   return url.toString();
                 } catch (e) {
                   return cart.checkoutUrl;
