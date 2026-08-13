@@ -1792,43 +1792,7 @@ html, body {
   }
 }
 
-/* Menu Drawer Styles */
-
-/* Menu Drawer Styles */
-    padding: 2rem;
-  }
-  
-  .menu-link-item {
-    font-size: 2.5rem !important;
-    font-family: var(--font-serif) !important;
-    border-bottom: none !important;
-    padding: 0.5rem 0 !important;
-    color: #111 !important;
-    transition: transform 0.3s ease, color 0.3s ease !important;
-  }
-  
-  .menu-link-item:hover {
-    color: var(--accent-terra) !important;
-    transform: translateX(10px) !important;
-  }
-  
-  .menu-image-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    width: 100%;
-    max-width: 800px;
-  }
-  
-  .menu-image-card {
-    width: 100% !important;
-    aspect-ratio: 4/5 !important;
-  }
-}
-
-.menu-link-item {
-  display: block;
-}
+/* End of globals.css */
 
 /* Premium Wide Drawer Menu */
 .menu-drawer-container {
