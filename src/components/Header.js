@@ -161,90 +161,93 @@ export default function Header({ theme = 'light' }) {
             position: 'relative',
             backgroundColor: '#fff',
             height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
             overflowY: 'auto'
           }}>
             {/* Close Button */}
             <button 
               onClick={() => setIsMenuOpen(false)}
               style={{
-                position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10,
-                background: 'none', border: 'none', padding: '1rem', cursor: 'pointer'
+                background: 'none', border: 'none', padding: '1.5rem', cursor: 'pointer', alignSelf: 'flex-start'
               }}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
 
-            <div className="menu-drawer-inner">
-              {/* Left Column: Navigation Links */}
-              <div className="menu-left-col" style={{ padding: '4rem 1.5rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                  {['Candles', 'Freshner', 'Soft Toys', 'Hampers', 'Gift Sets', 'All Products'].map((item, i) => (
-                    <Link href="#products" key={i} onClick={() => setIsMenuOpen(false)} className="menu-link-item" style={{
-                      padding: '1.2rem 0',
-                      borderBottom: '1px solid #f0f0f0',
-                      textDecoration: 'none',
-                      color: '#111',
-                      fontFamily: 'var(--font-sans)',
-                      fontWeight: 600,
-                      fontSize: '0.95rem'
-                    }}>
-                      {item}
-                    </Link>
-                  ))}
-                </div>
+            {/* Top Image Cards Row */}
+            <div style={{
+              display: 'flex',
+              overflowX: 'auto',
+              gap: '1rem',
+              padding: '0 1.5rem 2rem 1.5rem',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none'
+            }} className="hide-scroll">
+              {categories.map((cat, idx) => (
+                <Link href="#products" key={idx} onClick={() => setIsMenuOpen(false)} style={{
+                  flex: '0 0 auto',
+                  width: '160px',
+                  aspectRatio: '3/4',
+                  position: 'relative',
+                  textDecoration: 'none',
+                  borderRadius: '6px',
+                  overflow: 'hidden'
+                }}>
+                  <img src={cat.img} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, width: '100%',
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%)',
+                    color: '#fff',
+                    padding: '1rem 0.5rem',
+                    textAlign: 'center',
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                    letterSpacing: '0.05em'
+                  }}>
+                    {cat.label}
+                  </div>
+                </Link>
+              ))}
+            </div>
 
-                {/* Secondary Links & Footer */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '3rem' }}>
-                  {['My Account', 'FAQ', 'Client Reviews', 'Contact'].map((item, i) => (
-                    <Link href="#" key={i} style={{
-                      textDecoration: 'none',
-                      color: '#666',
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: '0.85rem'
-                    }}>
-                      {item}
-                    </Link>
-                  ))}
-                </div>
-              </div>
+            {/* Main Links */}
+            <div style={{ padding: '0 2rem', display: 'flex', flexDirection: 'column' }}>
+              {['Candles', 'Freshner', 'Soft Toys', 'Hampers', 'Gift Sets', 'All Products'].map((item, i) => (
+                <Link href="#products" key={i} onClick={() => setIsMenuOpen(false)} className="premium-menu-link" style={{
+                  padding: '1.2rem 0',
+                  borderBottom: '1px solid #f0f0f0',
+                  textDecoration: 'none',
+                  color: '#111',
+                  fontFamily: 'var(--font-sans)',
+                  fontWeight: 600,
+                  fontSize: '1.1rem'
+                }}>
+                  {item}
+                </Link>
+              ))}
+            </div>
 
-              {/* Right Column: Featured Image Cards */}
-              <div className="menu-right-col" style={{
-                display: 'flex',
-                overflowX: 'auto',
-                gap: '0.5rem',
-                padding: '4rem 1rem 2rem 1rem',
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none'
-              }}>
-                <div className="menu-image-grid hide-scroll" style={{ display: 'flex', gap: '0.5rem' }}>
-                  {categories.map((cat, idx) => (
-                    <Link href="#products" key={idx} onClick={() => setIsMenuOpen(false)} className="menu-image-card" style={{
-                      flex: '0 0 auto',
-                      width: '180px',
-                      aspectRatio: '3/4',
-                      position: 'relative',
-                      textDecoration: 'none',
-                      borderRadius: '8px',
-                      overflow: 'hidden'
-                    }}>
-                      <img src={cat.img} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      <div style={{
-                        position: 'absolute', bottom: 0, left: 0, width: '100%',
-                        background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)',
-                        color: '#fff',
-                        padding: '1rem 0.5rem',
-                        textAlign: 'center',
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '0.9rem',
-                        fontWeight: 600,
-                        letterSpacing: '0.05em'
-                      }}>
-                        {cat.label}
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+            {/* Secondary Links & Footer */}
+            <div style={{ padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: 'auto', backgroundColor: '#fcfcfc' }}>
+              {['My Account', 'FAQ', 'Client Reviews', 'Contact'].map((item, i) => (
+                <Link href="#" key={i} style={{
+                  textDecoration: 'none',
+                  color: '#555',
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '0.9rem',
+                  fontWeight: 500
+                }}>
+                  {item}
+                </Link>
+              ))}
+              
+              <div style={{ display: 'flex', gap: '2rem', marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #eaeaea', color: '#555', fontSize: '0.9rem', fontFamily: 'var(--font-sans)', fontWeight: 500 }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Contact Us
+                </span>
               </div>
             </div>
           </div>
