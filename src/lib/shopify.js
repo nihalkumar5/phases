@@ -43,6 +43,8 @@ export async function getProducts() {
                 currencyCode
               }
             }
+            tags
+            productType
             images(first: 1) {
               edges {
                 node {

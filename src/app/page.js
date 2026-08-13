@@ -10,6 +10,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from '@/components/FadeIn';
 import RetroBadge from '@/components/RetroBadge';
 import BestSellersCarousel from '@/components/BestSellersCarousel';
 import VideoReels from '@/components/VideoReels';
+import CategoryProducts from '@/components/CategoryProducts';
 
 export const dynamic = 'force-dynamic';
 
@@ -93,73 +94,8 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Categories Section */}
-      <section className="categories-grid">
-        {categories.map((cat, idx) => (
-          <Link 
-            key={idx} 
-            href="#products" 
-            style={{ 
-              display: 'block', 
-              position: 'relative', 
-              width: '100%', 
-              height: '60vh', // takes up good vertical space
-              minHeight: '400px',
-              textDecoration: 'none',
-              overflow: 'hidden'
-            }}
-            className="category-card"
-          >
-            <img 
-              src={cat.img} 
-              alt={cat.label} 
-              style={{ 
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-                objectPosition: 'center',
-                transition: 'transform 0.6s ease'
-              }} 
-              className="category-img"
-            />
-            {/* Dark overlay at bottom for text readability */}
-            <div style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              width: '100%',
-              height: '40%',
-              background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)',
-              zIndex: 1
-            }} />
-            
-            {/* Category Text */}
-            <div style={{
-              position: 'absolute',
-              bottom: '3rem',
-              left: 0,
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              zIndex: 2
-            }}>
-              <span style={{
-                color: '#fff',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '1rem',
-                fontWeight: 600,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-                borderBottom: '2px solid #fff',
-                paddingBottom: '0.4rem',
-                transition: 'all 0.3s ease'
-              }} className="category-label">
-                {cat.label}
-              </span>
-            </div>
-          </Link>
-        ))}
-      </section>
+      {/* Categorized Products */}
+      <CategoryProducts products={products} />
 
       {/* Reviews Section */}
       <ReviewsSection />

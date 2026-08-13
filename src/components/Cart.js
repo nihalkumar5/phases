@@ -201,7 +201,15 @@ export default function Cart() {
             </label>
 
             <a 
-              href={cart.checkoutUrl} 
+              href={(() => {
+                try {
+                  const url = new URL(cart.checkoutUrl);
+                  url.hostname = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || 'phases-handcrafted.myshopify.com';
+                  return url.toString();
+                } catch (e) {
+                  return cart.checkoutUrl;
+                }
+              })()}
               style={{ 
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 width: '100%', padding: '1.2rem', textDecoration: 'none', borderRadius: '4px',
