@@ -130,13 +130,12 @@ export default async function Home() {
               { label: 'Kids Gifts', icon: '👶', bg: '#e3f2fd', query: '/?occasion=Kids#products' }
             ].map((occ, i) => (
               <Link href={occ.query} key={i} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div style={{
+                <div className="hover-card"
+                style={{
                   backgroundColor: '#fff', border: '1px solid #f0f0f0', borderRadius: '8px', padding: '1.8rem 1rem',
                   display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.8rem',
                   cursor: 'pointer', transition: 'all 0.3s ease', boxShadow: '0 4px 12px rgba(0,0,0,0.02)'
                 }}
-                onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.borderColor = '#1b2c13'; }}
-                onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = '#f0f0f0'; }}
                 >
                   <span style={{ fontSize: '2rem', backgroundColor: occ.bg, width: '60px', height: '60px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {occ.icon}
@@ -198,12 +197,11 @@ export default async function Home() {
               { label: 'Premium Gifts', desc: 'Luxury collections', query: '/?budget=Premium#products' }
             ].map((bud, i) => (
               <Link href={bud.query} key={i} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div style={{
+                <div className="hover-card"
+                style={{
                   backgroundColor: '#fff', border: '1px solid #f0f0f0', borderRadius: '8px', padding: '2rem 1.5rem',
                   cursor: 'pointer', transition: 'all 0.3s ease', boxShadow: '0 4px 12px rgba(0,0,0,0.02)'
                 }}
-                onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.borderColor = '#1b2c13'; }}
-                onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = '#f0f0f0'; }}
                 >
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1b2c13', margin: '0 0 0.5rem 0', fontFamily: 'var(--font-sans)' }}>{bud.label}</h3>
                   <p style={{ fontSize: '0.85rem', color: '#666', margin: 0, fontFamily: 'var(--font-sans)' }}>{bud.desc}</p>
@@ -279,6 +277,15 @@ export default async function Home() {
 
         </div>
       </footer>
+      <style dangerouslySetInnerHTML={{__html: `
+        .hover-card {
+          transition: all 0.3s ease;
+        }
+        .hover-card:hover {
+          transform: translateY(-4px) !important;
+          border-color: #1b2c13 !important;
+        }
+      `}} />
     </main>
   );
 }
