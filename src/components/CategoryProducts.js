@@ -11,6 +11,7 @@ export default function CategoryProducts({ products }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedOccasion, setSelectedOccasion] = useState('All');
   const [selectedBudget, setSelectedBudget] = useState('All');
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   // Read deep-linked filters on mount
   useEffect(() => {
@@ -27,11 +28,22 @@ export default function CategoryProducts({ products }) {
       };
       
       handleHashAndParams();
-      // Listen for hash/query changes
       window.addEventListener('popstate', handleHashAndParams);
       return () => window.removeEventListener('popstate', handleHashAndParams);
     }
   }, []);
+
+  // Lock body scroll when mobile filter drawer is open
+  useEffect(() => {
+    if (isMobileFilterOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileFilterOpen]);
 
   // Classification Helpers
   const classifyProduct = (product) => {
@@ -111,130 +123,92 @@ export default function CategoryProducts({ products }) {
     setSelectedBudget('All');
   };
 
+  const activeFilterCount = (selectedCategory !== 'All' ? 1 : 0) + 
+                            (selectedOccasion !== 'All' ? 1 : 0) + 
+                            (selectedBudget !== 'All' ? 1 : 0);
+
   return (
-    <section id="products" style={{ padding: '5rem 5%', backgroundColor: '#fff', fontFamily: 'var(--font-sans)' }}>
+    <section id="products" style={{ padding: '2rem 5% 5rem 5%', backgroundColor: '#fff', fontFamily: 'var(--font-sans)' }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
         
-        <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)', fontFamily: 'var(--font-serif)', fontWeight: 400, color: '#1b2c13', textAlign: 'center', marginBottom: '3rem' }}>
+        <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)', fontFamily: 'var(--font-serif)', fontWeight: 400, color: '#1b2c13', textAlign: 'center', marginBottom: '2rem' }}>
           Shop Our Collections
-        </h2>
+        </h1>
 
-        {/* Filter Section Container */}
+        {/* MOBILE: Clean Category Pills + Filter Button */}
+        <div className="mobile-filter-bar">
+          <button 
+            onClick={() => setIsMobileFilterOpen(true)}
+            className="mobile-filter-btn"
+            aria-label="Open Filters"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="4" y1="21" x2="4" y2="14"></line>
+              <line x1="4" y1="10" x2="4" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12" y2="3"></line>
+              <line x1="20" y1="21" x2="20" y2="16"></line>
+              <line x1="20" y1="12" x2="20" y2="3"></line>
+              <line x1="1" y1="14" x2="7" y2="14"></line>
+              <line x1="9" y1="8" x2="15" y2="8"></line>
+              <line x1="17" y1="16" x2="23" y2="16"></line>
+            </svg>
+            <span>Filters</span>
+            {activeFilterCount > 0 && (
+              <span className="filter-badge">{activeFilterCount}</span>
+            )}
+          </button>
+
+          {/* Horizontal scrollable categories */}
+          <div className="category-scroll-container hide-scroll">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`category-pill ${selectedCategory === cat ? 'active' : ''}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Active Filter Tags Row on Mobile when filters applied */}
+        {activeFilterCount > 0 && (
+          <div className="mobile-active-tags">
+            {selectedCategory !== 'All' && (
+              <span className="active-tag">
+                {selectedCategory}
+                <button onClick={() => setSelectedCategory('All')} aria-label="Remove category filter">✕</button>
+              </span>
+            )}
+            {selectedOccasion !== 'All' && (
+              <span className="active-tag">
+                {selectedOccasion}
+                <button onClick={() => setSelectedOccasion('All')} aria-label="Remove occasion filter">✕</button>
+              </span>
+            )}
+            {selectedBudget !== 'All' && (
+              <span className="active-tag">
+                {selectedBudget}
+                <button onClick={() => setSelectedBudget('All')} aria-label="Remove budget filter">✕</button>
+              </span>
+            )}
+            <button onClick={resetFilters} className="clear-all-inline-btn">
+              Clear All
+            </button>
+          </div>
+        )}
+
+        {/* Main Grid Container */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }} className="shop-grid-container">
-          
-          <style jsx>{`
-            @media (min-width: 992px) {
-              .shop-grid-container {
-                grid-template-columns: 280px 1fr !important;
-              }
-              .sidebar-filters {
-                position: sticky;
-                top: 100px;
-                height: fit-content;
-              }
-            }
-            .filter-group-title {
-              font-size: 0.75rem;
-              font-weight: 700;
-              text-transform: uppercase;
-              letter-spacing: 0.05em;
-              color: #777;
-              margin-bottom: 0.8rem;
-              border-bottom: 1px solid #eee;
-              padding-bottom: 0.4rem;
-            }
-            .filter-list {
-              display: flex;
-              flex-wrap: wrap;
-              gap: 0.5rem;
-              margin-bottom: 1.8rem;
-            }
-            @media (min-width: 992px) {
-              .filter-list {
-                flex-direction: column;
-                align-items: flex-start;
-              }
-            }
-            .filter-chip {
-              background: none;
-              border: 1px solid #e2e2e2;
-              border-radius: 4px;
-              padding: 0.4rem 0.8rem;
-              font-size: 0.85rem;
-              font-family: var(--font-sans);
-              font-weight: 600;
-              color: #555;
-              cursor: pointer;
-              transition: all 0.2s ease;
-            }
-            .filter-chip.active {
-              background-color: #1b2c13;
-              color: #fff;
-              border-color: #1b2c13;
-            }
-            .product-card {
-              display: flex;
-              flex-direction: column;
-              background-color: #fff;
-              border-radius: 8px;
-              overflow: hidden;
-              position: relative;
-              transition: transform 0.3s ease, box-shadow 0.3s ease;
-              border: 1px solid #f0f0f0;
-              height: 100%;
-              text-decoration: none;
-              color: inherit;
-            }
-            .product-card:hover {
-              transform: translateY(-5px);
-              box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            }
-            .quick-add-btn {
-              background-color: rgba(255,255,255,0.95);
-              color: #111;
-              border: 1px solid #111;
-              font-family: var(--font-sans);
-              font-weight: 700;
-              font-size: 0.8rem;
-              text-transform: uppercase;
-              letter-spacing: 0.05em;
-              width: 90%;
-              padding: 0.8rem;
-              position: absolute;
-              bottom: 15px;
-              left: 5%;
-              cursor: pointer;
-              border-radius: 4px;
-              opacity: 0;
-              transform: translateY(10px);
-              transition: all 0.3s ease;
-              z-index: 10;
-            }
-            .product-card:hover .quick-add-btn {
-              opacity: 1;
-              transform: translateY(0);
-            }
-            @media (max-width: 768px) {
-              .quick-add-btn {
-                opacity: 1 !important;
-                transform: translateY(0) !important;
-                position: static;
-                width: 100%;
-                margin-top: 1rem;
-                background-color: #1b2c13;
-                color: #fff;
-                border-color: #1b2c13;
-                padding: 0.6rem;
-              }
-            }
-          `}</style>
 
-          {/* SIDEBAR: Filters */}
+          {/* DESKTOP SIDEBAR: Filters */}
           <div className="sidebar-filters" style={{ backgroundColor: '#faf9f5', padding: '1.5rem', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.04)' }}>
             
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#111', margin: 0 }}>Filters</h3>
-              {(selectedCategory !== 'All' || selectedOccasion !== 'All' || selectedBudget !== 'All') && (
+              {activeFilterCount > 0 && (
                 <button onClick={resetFilters} style={{ background: 'none', border: 'none', color: '#a22020', fontSize: '0.78rem', fontWeight: 600, textDecoration: 'underline', cursor: 'pointer' }}>
                   Clear All
                 </button>
@@ -293,11 +267,11 @@ export default function CategoryProducts({ products }) {
 
           {/* PRODUCTS GRID */}
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', fontSize: '0.85rem', color: '#666' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem', fontSize: '0.85rem', color: '#666' }}>
               <span>Showing <strong>{filteredProducts.length}</strong> products</span>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.5rem' }}>
+            <div className="responsive-product-grid">
               {filteredProducts.map(({ node: product }) => {
                 const variantId = product.variants?.edges?.[0]?.node?.id || product.id;
                 const price = product.priceRange.maxVariantPrice;
@@ -332,19 +306,19 @@ export default function CategoryProducts({ products }) {
                           addToCart(variantId, 1, true);
                         }}
                         disabled={isLoading}
-                        className="quick-add-btn"
+                        className="quick-add-btn desktop-quick-add"
                       >
                         {isLoading ? 'Adding...' : 'Quick Add +'}
                       </button>
                     </div>
 
                     {/* Info */}
-                    <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                      <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#111', margin: '0 0 0.5rem 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', height: '2.4rem', lineHeight: '1.2rem' }}>
+                    <div style={{ padding: '0.9rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                      <h3 style={{ fontSize: '0.88rem', fontWeight: 600, color: '#111', margin: '0 0 0.4rem 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', height: '2.4rem', lineHeight: '1.2rem' }}>
                         {product.title.split('|')[0].trim()}
                       </h3>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '0.5rem' }}>
-                        <span style={{ fontSize: '1.05rem', fontWeight: 700, color: '#1b2c13' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '0.3rem' }}>
+                        <span style={{ fontSize: '1rem', fontWeight: 700, color: '#1b2c13' }}>
                           {formattedPrice}
                         </span>
                       </div>
@@ -357,8 +331,7 @@ export default function CategoryProducts({ products }) {
                           addToCart(variantId, 1, true);
                         }}
                         disabled={isLoading}
-                        className="mobile-only quick-add-btn"
-                        style={{ display: 'none' }} /* overridden by stylesheet on mobile */
+                        className="quick-add-btn"
                       >
                         {isLoading ? 'Adding...' : 'Quick Add +'}
                       </button>
@@ -385,6 +358,458 @@ export default function CategoryProducts({ products }) {
         </div>
 
       </div>
+
+      {/* MOBILE BOTTOM SHEET MODAL FOR ALL FILTERS */}
+      {isMobileFilterOpen && (
+        <div 
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(3px)',
+            zIndex: 9999,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            flexDirection: 'column',
+          }}
+          onClick={() => setIsMobileFilterOpen(false)}
+        >
+          <div 
+            style={{
+              backgroundColor: '#fff',
+              borderTopLeftRadius: '20px',
+              borderTopRightRadius: '20px',
+              maxHeight: '85vh',
+              display: 'flex',
+              flexDirection: 'column',
+              boxShadow: '0 -10px 30px rgba(0,0,0,0.2)',
+              overflow: 'hidden',
+              animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '1.2rem 1.5rem',
+              borderBottom: '1px solid #eee'
+            }}>
+              <div>
+                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: '#111' }}>
+                  Filter Products
+                </h3>
+                <span style={{ fontSize: '0.75rem', color: '#777' }}>
+                  {filteredProducts.length} items found
+                </span>
+              </div>
+              <button 
+                onClick={() => setIsMobileFilterOpen(false)}
+                style={{
+                  background: '#f0f0f0',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '32px',
+                  height: '32px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  color: '#333'
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Scrollable Filter Content */}
+            <div style={{ padding: '1.5rem', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              
+              {/* Category Options */}
+              <div>
+                <h4 style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#888', margin: '0 0 0.8rem 0' }}>
+                  Category
+                </h4>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {categories.map(cat => (
+                    <button
+                      key={cat}
+                      onClick={() => setSelectedCategory(cat)}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        borderRadius: '20px',
+                        border: selectedCategory === cat ? '1px solid #1b2c13' : '1px solid #e0e0e0',
+                        backgroundColor: selectedCategory === cat ? '#1b2c13' : '#fff',
+                        color: selectedCategory === cat ? '#fff' : '#444',
+                        fontWeight: 600,
+                        fontSize: '0.85rem',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Occasion Options */}
+              <div>
+                <h4 style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#888', margin: '0 0 0.8rem 0' }}>
+                  Shop by Occasion
+                </h4>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {occasions.map(occ => (
+                    <button
+                      key={occ}
+                      onClick={() => setSelectedOccasion(occ)}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        borderRadius: '20px',
+                        border: selectedOccasion === occ ? '1px solid #1b2c13' : '1px solid #e0e0e0',
+                        backgroundColor: selectedOccasion === occ ? '#1b2c13' : '#fff',
+                        color: selectedOccasion === occ ? '#fff' : '#444',
+                        fontWeight: 600,
+                        fontSize: '0.85rem',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {occ}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Budget Options */}
+              <div>
+                <h4 style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#888', margin: '0 0 0.8rem 0' }}>
+                  Shop by Budget
+                </h4>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {budgets.map(bud => (
+                    <button
+                      key={bud}
+                      onClick={() => setSelectedBudget(bud)}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        borderRadius: '20px',
+                        border: selectedBudget === bud ? '1px solid #1b2c13' : '1px solid #e0e0e0',
+                        backgroundColor: selectedBudget === bud ? '#1b2c13' : '#fff',
+                        color: selectedBudget === bud ? '#fff' : '#444',
+                        fontWeight: 600,
+                        fontSize: '0.85rem',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {bud}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+            {/* Bottom Actions Footer */}
+            <div style={{
+              padding: '1rem 1.5rem',
+              borderTop: '1px solid #eee',
+              backgroundColor: '#fafafa',
+              display: 'flex',
+              gap: '1rem',
+              alignItems: 'center'
+            }}>
+              <button
+                onClick={resetFilters}
+                style={{
+                  flex: 1,
+                  padding: '0.85rem',
+                  backgroundColor: '#fff',
+                  border: '1px solid #ddd',
+                  color: '#444',
+                  borderRadius: '6px',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  cursor: 'pointer'
+                }}
+              >
+                Reset All
+              </button>
+              <button
+                onClick={() => setIsMobileFilterOpen(false)}
+                style={{
+                  flex: 2,
+                  padding: '0.85rem',
+                  backgroundColor: '#1b2c13',
+                  border: 'none',
+                  color: '#fff',
+                  borderRadius: '6px',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
+                  cursor: 'pointer'
+                }}
+              >
+                Apply ({filteredProducts.length})
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* SINGLE UNIFIED STYLED-JSX BLOCK */}
+      <style jsx>{`
+        /* Mobile Category & Filter Bar */
+        .mobile-filter-bar {
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          margin-bottom: 1.2rem;
+          width: 100%;
+        }
+        .mobile-filter-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          background-color: #f6f5f0;
+          border: 1px solid #1b2c13;
+          color: #1b2c13;
+          padding: 0.55rem 0.9rem;
+          border-radius: 20px;
+          font-family: var(--font-sans);
+          font-size: 0.82rem;
+          font-weight: 700;
+          cursor: pointer;
+          flex-shrink: 0;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .filter-badge {
+          background-color: #1b2c13;
+          color: #fff;
+          font-size: 0.65rem;
+          border-radius: 50%;
+          width: 17px;
+          height: 17px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 800;
+        }
+        .category-scroll-container {
+          display: flex;
+          gap: 0.45rem;
+          overflow-x: auto;
+          padding: 0.2rem 0;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          width: 100%;
+        }
+        .category-pill {
+          flex-shrink: 0;
+          scroll-snap-align: start;
+          background: #fff;
+          border: 1px solid #e0e0e0;
+          border-radius: 20px;
+          padding: 0.45rem 0.9rem;
+          font-size: 0.82rem;
+          font-family: var(--font-sans);
+          font-weight: 600;
+          color: #555;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          white-space: nowrap;
+        }
+        .category-pill.active {
+          background-color: #1b2c13;
+          color: #fff;
+          border-color: #1b2c13;
+        }
+        .mobile-active-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.4rem;
+          align-items: center;
+          margin-bottom: 1.2rem;
+        }
+        .active-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          background-color: #1b2c13;
+          color: #fff;
+          font-size: 0.75rem;
+          font-weight: 600;
+          padding: 0.25rem 0.6rem;
+          border-radius: 12px;
+        }
+        .active-tag button {
+          background: none;
+          border: none;
+          color: #fff;
+          cursor: pointer;
+          font-size: 0.75rem;
+          padding: 0;
+          line-height: 1;
+        }
+        .clear-all-inline-btn {
+          background: none;
+          border: none;
+          color: #a22020;
+          font-size: 0.75rem;
+          font-weight: 600;
+          text-decoration: underline;
+          cursor: pointer;
+          padding: 0.2rem 0.4rem;
+        }
+
+        /* Product Grid */
+        .responsive-product-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.9rem;
+        }
+
+        /* Responsive rules for Desktop vs Mobile */
+        @media (max-width: 991px) {
+          .sidebar-filters {
+            display: none !important;
+          }
+        }
+        @media (min-width: 600px) {
+          .responsive-product-grid {
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+            gap: 1.5rem !important;
+          }
+        }
+        @media (min-width: 992px) {
+          .mobile-filter-bar, .mobile-active-tags {
+            display: none !important;
+          }
+          .shop-grid-container {
+            grid-template-columns: 280px 1fr !important;
+          }
+          .sidebar-filters {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            display: block !important;
+          }
+        }
+
+        .filter-group-title {
+          font-size: 0.75rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: #777;
+          margin-bottom: 0.8rem;
+          border-bottom: 1px solid #eee;
+          padding-bottom: 0.4rem;
+        }
+        .filter-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-bottom: 1.8rem;
+        }
+        @media (min-width: 992px) {
+          .filter-list {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+        }
+        .filter-chip {
+          background: none;
+          border: 1px solid #e2e2e2;
+          border-radius: 4px;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.85rem;
+          font-family: var(--font-sans);
+          font-weight: 600;
+          color: #555;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .filter-chip.active {
+          background-color: #1b2c13;
+          color: #fff;
+          border-color: #1b2c13;
+        }
+        .product-card {
+          display: flex;
+          flex-direction: column;
+          background-color: #fff;
+          border-radius: 8px;
+          overflow: hidden;
+          position: relative;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          border: 1px solid #f0f0f0;
+          height: 100%;
+          text-decoration: none;
+          color: inherit;
+        }
+        .product-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .quick-add-btn {
+          background-color: rgba(255,255,255,0.95);
+          color: #111;
+          border: 1px solid #111;
+          font-family: var(--font-sans);
+          font-weight: 700;
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          width: 90%;
+          padding: 0.8rem;
+          position: absolute;
+          bottom: 15px;
+          left: 5%;
+          cursor: pointer;
+          border-radius: 4px;
+          opacity: 0;
+          transform: translateY(10px);
+          transition: all 0.3s ease;
+          z-index: 10;
+        }
+        .product-card:hover .quick-add-btn {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        @media (max-width: 768px) {
+          .quick-add-btn {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            position: static;
+            width: 100%;
+            margin-top: 0.8rem;
+            background-color: #1b2c13;
+            color: #fff;
+            border-color: #1b2c13;
+            padding: 0.55rem;
+            font-size: 0.78rem;
+          }
+        }
+
+        .hide-scroll::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scroll {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+
+        @keyframes slideUp {
+          from {
+            transform: translateY(100%);
+          }
+          to {
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+
     </section>
   );
 }
