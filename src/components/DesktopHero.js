@@ -26,7 +26,7 @@ export default function DesktopHero() {
         <div style={{
           position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
           backgroundImage: 'url("https://images.unsplash.com/photo-1602874801007-bd458bb1b8b6?auto=format&fit=crop&q=80")',
-          backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.15, pointerEvents: 'none'
+          backgroundSize: 'cover', backgroundPosition: 'center', opacity: 1, pointerEvents: 'none'
         }} />
 
         <div style={{ position: 'relative', zIndex: 2, maxWidth: '500px' }}>
