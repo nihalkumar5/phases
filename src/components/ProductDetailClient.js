@@ -35,7 +35,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
   const handleCheckPincode = (e) => {
     e.preventDefault();
     if (pincode.trim().length === 6) {
-      setPincodeMessage({ valid: true, text: `✓ Standard delivery to ${pincode} available in 3-5 days.` });
+      setPincodeMessage({ valid: true, text: `✓ Standard delivery to ${pincode} in 3-5 business days.` });
     } else {
       setPincodeMessage({ valid: false, text: 'Please enter a valid 6-digit PIN code.' });
     }
@@ -65,6 +65,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                   key={idx}
                   onClick={() => setSelectedImageIndex(idx)}
                   className={`thumb-btn ${selectedImageIndex === idx ? 'active' : ''}`}
+                  aria-label={`Thumbnail ${idx + 1}`}
                 >
                   <img src={img.url} alt={img.altText || `Thumbnail ${idx + 1}`} />
                 </button>
@@ -84,7 +85,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               ) : (
                 <div className="no-image-placeholder">No Image Available</div>
               )}
-              <span className="luxury-badge">✦ Handcrafted in Small Batches</span>
+              <span className="luxury-badge">✦ Handcrafted Soy</span>
             </div>
 
             {/* Mobile Carousel Indicators */}
@@ -111,8 +112,8 @@ export default function ProductDetailClient({ product, relatedProducts }) {
             <div className="rating-review-tag">
               <span className="stars">★★★★★</span>
               <span className="rating-score">4.9</span>
-              <span className="review-count">(94 Verified Reviews)</span>
-              <span className="live-viewers">• 14 sold in last 24 hrs</span>
+              <span className="review-count">(94 Reviews)</span>
+              <span className="live-viewers">• 14 sold recently</span>
             </div>
 
             <h1 className="product-title-serif">
@@ -124,7 +125,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               <span className="mrp-strikethrough">₹{Math.round(numericPrice * 1.25)}</span>
               <span className="discount-pill">Save 20%</span>
             </div>
-            <p className="tax-shipping-subtext">Inclusive of all taxes • Free shipping on orders above ₹500</p>
+            <p className="tax-shipping-subtext">Inclusive of all taxes • Free shipping over ₹500</p>
           </div>
 
           {/* Quick Gifting Highlights Card */}
@@ -133,7 +134,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               <span className="perk-icon">🎁</span>
               <div className="perk-text">
                 <strong>Luxury Gift Box Ready</strong>
-                <span>Packed with care in signature luxury presentation.</span>
+                <span>Packed with care in signature boutique wrap.</span>
               </div>
             </div>
             <div className="perk-item">
@@ -147,7 +148,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               <span className="perk-icon">🌱</span>
               <div className="perk-text">
                 <strong>100% Pure Soy Wax</strong>
-                <span>Clean, non-toxic, smoke-free burn.</span>
+                <span>Clean, non-toxic, soot-free burn.</span>
               </div>
             </div>
           </div>
@@ -181,9 +182,9 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 className={`primary-add-to-cart-btn ${isAddedAnimation ? 'success' : ''}`}
               >
                 {isLoading ? (
-                  <span>Adding to Cart...</span>
+                  <span>Adding...</span>
                 ) : isAddedAnimation ? (
-                  <span>✓ Added to Cart!</span>
+                  <span>✓ Added!</span>
                 ) : (
                   <span>ADD TO CART • {new Intl.NumberFormat('en-IN', { style: 'currency', currency: price?.currencyCode || 'INR', maximumFractionDigits: 0 }).format(numericPrice * quantity)}</span>
                 )}
@@ -192,17 +193,17 @@ export default function ProductDetailClient({ product, relatedProducts }) {
 
             {/* Secondary Bundle Builder CTA */}
             <Link href="/build-your-bundle" className="secondary-bundle-btn">
-              <span>✨ Or Add this into a Custom Gift Box (Save up to 15%) →</span>
+              <span>✨ Add to Custom Gift Box (Save 15%) →</span>
             </Link>
           </div>
 
           {/* Pincode Delivery Check */}
           <div className="pincode-check-card">
-            <span className="pincode-label">🚚 Check Estimated Delivery</span>
+            <span className="pincode-label">🚚 Estimated Delivery</span>
             <form onSubmit={handleCheckPincode} className="pincode-form">
               <input 
                 type="text" 
-                placeholder="Enter 6-digit PIN Code" 
+                placeholder="Enter 6-digit PIN" 
                 value={pincode}
                 maxLength={6}
                 onChange={(e) => setPincode(e.target.value.replace(/\D/g, ''))}
@@ -254,24 +255,24 @@ export default function ProductDetailClient({ product, relatedProducts }) {
 
           {/* Clean Interactive Tabbed Specifications */}
           <div className="pdp-tabs-section">
-            <div className="pdp-tab-headers">
+            <div className="pdp-tab-headers hide-scroll">
               <button 
                 onClick={() => setActiveTab('description')} 
                 className={`tab-link ${activeTab === 'description' ? 'active' : ''}`}
               >
-                Description & Scents
+                Description
               </button>
               <button 
                 onClick={() => setActiveTab('specs')} 
                 className={`tab-link ${activeTab === 'specs' ? 'active' : ''}`}
               >
-                Features & Craft
+                Features
               </button>
               <button 
                 onClick={() => setActiveTab('care')} 
                 className={`tab-link ${activeTab === 'care' ? 'active' : ''}`}
               >
-                Care & Burning Tips
+                Care Tips
               </button>
             </div>
 
@@ -292,28 +293,28 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                       <span className="spec-icon">🌱</span>
                       <div>
                         <strong>100% Natural Wax</strong>
-                        <span>Pure soy & natural coconut botanical blend</span>
+                        <span>Pure soy & natural botanical blend</span>
                       </div>
                     </div>
                     <div className="spec-pill">
                       <span className="spec-icon">🕯️</span>
                       <div>
                         <strong>Burn Time</strong>
-                        <span>Approx. 25-35 hours clean, consistent burn</span>
+                        <span>Approx. 25-35 hours clean burn</span>
                       </div>
                     </div>
                     <div className="spec-pill">
                       <span className="spec-icon">🧵</span>
                       <div>
                         <strong>Wick Craft</strong>
-                        <span>100% Lead-free braided organic cotton</span>
+                        <span>Lead-free organic braided cotton</span>
                       </div>
                     </div>
                     <div className="spec-pill">
-                      <span className="spec-icon">🧪</span>
+                      <span className="spec-icon">✨</span>
                       <div>
-                        <strong>Toxin Free</strong>
-                        <span>No parabens, phthalates, or chemical accelerants</span>
+                        <strong>Non-Toxic</strong>
+                        <span>No parabens or harmful additives</span>
                       </div>
                     </div>
                   </div>
@@ -323,10 +324,10 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               {activeTab === 'care' && (
                 <div className="tab-pane-fade">
                   <ul className="candle-care-list">
-                    <li>✦ Trim the wick to 1/4 inch before each burn for a cleaner, smoke-free flame.</li>
-                    <li>✦ Allow the wax to melt completely to the edges on your first burn to prevent tunneling.</li>
-                    <li>✦ Burn for a maximum of 3-4 hours at a time in a draft-free space.</li>
-                    <li>✦ Keep away from flammable objects, children, and pets.</li>
+                    <li>✦ Trim the wick to 1/4 inch before each burn for a clean flame.</li>
+                    <li>✦ Allow wax to melt completely to the edges on first burn.</li>
+                    <li>✦ Burn for 3-4 hours maximum in a draft-free space.</li>
+                    <li>✦ Keep away from flammable objects and children.</li>
                   </ul>
                 </div>
               )}
@@ -356,20 +357,25 @@ export default function ProductDetailClient({ product, relatedProducts }) {
       <style jsx>{`
         .pdp-wrapper {
           max-width: 1350px;
+          width: 100%;
           margin: 0 auto;
-          padding: 1.5rem 1.5rem 4rem 1.5rem;
+          padding: 1.5rem 1rem 5rem 1rem;
           font-family: var(--font-sans);
           color: #111;
+          box-sizing: border-box;
+          overflow-x: hidden;
         }
 
         /* Breadcrumbs */
         .pdp-breadcrumbs {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          font-size: 0.82rem;
+          gap: 0.4rem;
+          font-size: 0.78rem;
           color: #777;
-          margin-bottom: 2rem;
+          margin-bottom: 1.5rem;
+          flex-wrap: wrap;
+          width: 100%;
         }
         .pdp-breadcrumbs a {
           color: #666;
@@ -385,14 +391,21 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         .pdp-breadcrumbs .current {
           color: #111;
           font-weight: 600;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: 160px;
         }
 
         /* Main Grid */
         .pdp-main-grid {
           display: grid;
-          grid-template-columns: 1fr;
-          gap: 3rem;
+          grid-template-columns: 100%;
+          gap: 2rem;
           align-items: start;
+          width: 100%;
+          min-width: 0;
+          box-sizing: border-box;
         }
         @media (min-width: 992px) {
           .pdp-main-grid {
@@ -404,7 +417,10 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         /* Gallery */
         .pdp-gallery {
           display: flex;
-          gap: 1.2rem;
+          gap: 1rem;
+          width: 100%;
+          min-width: 0;
+          box-sizing: border-box;
         }
         @media (max-width: 991px) {
           .pdp-gallery {
@@ -451,6 +467,8 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           flex: 1;
           display: flex;
           flex-direction: column;
+          min-width: 0;
+          width: 100%;
         }
         .main-image-container {
           position: relative;
@@ -459,38 +477,37 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           background-color: #faf9f6;
           border-radius: 12px;
           overflow: hidden;
-          box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.04);
           border: 1px solid rgba(0,0,0,0.04);
+          box-sizing: border-box;
         }
         .hero-product-image {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.4s ease;
-        }
-        .hero-product-image:hover {
-          transform: scale(1.03);
+          display: block;
         }
         .luxury-badge {
           position: absolute;
-          top: 15px;
-          left: 15px;
+          top: 12px;
+          left: 12px;
           background-color: rgba(255,255,255,0.92);
           backdrop-filter: blur(8px);
           color: #1b2c13;
-          font-size: 0.72rem;
+          font-size: 0.68rem;
           font-weight: 700;
-          letter-spacing: 0.08em;
+          letter-spacing: 0.06em;
           text-transform: uppercase;
-          padding: 0.4rem 0.8rem;
-          border-radius: 30px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+          padding: 0.35rem 0.7rem;
+          border-radius: 20px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+          white-space: nowrap;
         }
         .mobile-dots-indicator {
           display: flex;
           justify-content: center;
-          gap: 0.5rem;
-          margin-top: 1rem;
+          gap: 0.4rem;
+          margin-top: 0.8rem;
         }
         @media (min-width: 992px) {
           .mobile-dots-indicator {
@@ -498,7 +515,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           }
         }
         .dot-pill {
-          width: 24px;
+          width: 20px;
           height: 4px;
           border-radius: 2px;
           background-color: #ddd;
@@ -508,30 +525,35 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         }
         .dot-pill.active {
           background-color: #1b2c13;
-          width: 36px;
+          width: 32px;
         }
 
         /* Product Info Column */
         .pdp-info-column {
           display: flex;
           flex-direction: column;
-          gap: 1.8rem;
+          gap: 1.4rem;
+          width: 100%;
+          min-width: 0;
+          box-sizing: border-box;
+          overflow: hidden;
         }
 
         /* Header Block */
         .rating-review-tag {
           display: flex;
           align-items: center;
-          gap: 0.4rem;
-          font-size: 0.82rem;
+          gap: 0.35rem 0.5rem;
+          font-size: 0.78rem;
           color: #555;
-          margin-bottom: 0.6rem;
+          margin-bottom: 0.4rem;
           flex-wrap: wrap;
+          width: 100%;
         }
         .stars {
           color: #e5a93b;
           letter-spacing: 1px;
-          font-size: 0.95rem;
+          font-size: 0.9rem;
         }
         .rating-score {
           font-weight: 700;
@@ -543,82 +565,93 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         }
         .product-title-serif {
           font-family: var(--font-serif);
-          font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+          font-size: clamp(1.5rem, 5vw, 2.3rem);
           font-weight: 400;
-          line-height: 1.18;
+          line-height: 1.2;
           color: #111;
-          margin: 0 0 0.8rem 0;
+          margin: 0 0 0.6rem 0;
+          word-break: break-word;
+          overflow-wrap: break-word;
         }
         .price-tag-row {
           display: flex;
           align-items: baseline;
-          gap: 0.8rem;
-          margin-bottom: 0.3rem;
+          gap: 0.6rem;
+          margin-bottom: 0.2rem;
+          flex-wrap: wrap;
         }
         .current-price {
-          font-size: 1.6rem;
+          font-size: 1.5rem;
           font-weight: 700;
           color: #1b2c13;
         }
         .mrp-strikethrough {
-          font-size: 1.1rem;
+          font-size: 1rem;
           color: #999;
           text-decoration: line-through;
         }
         .discount-pill {
           background-color: #fce8e6;
           color: #c53030;
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           font-weight: 700;
-          padding: 0.2rem 0.55rem;
+          padding: 0.15rem 0.45rem;
           border-radius: 4px;
         }
         .tax-shipping-subtext {
-          font-size: 0.8rem;
+          font-size: 0.78rem;
           color: #777;
           margin: 0;
+          line-height: 1.4;
         }
 
         /* Gifting Perks Card */
         .gifting-perks-box {
           background-color: #faf9f5;
           border: 1px solid #ebd492;
-          border-radius: 10px;
-          padding: 1.2rem;
+          border-radius: 8px;
+          padding: 1rem;
           display: flex;
           flex-direction: column;
-          gap: 0.9rem;
+          gap: 0.75rem;
+          width: 100%;
+          box-sizing: border-box;
         }
         .perk-item {
           display: flex;
           align-items: flex-start;
-          gap: 0.8rem;
+          gap: 0.7rem;
         }
         .perk-icon {
-          font-size: 1.3rem;
+          font-size: 1.2rem;
           line-height: 1;
         }
         .perk-text strong {
           display: block;
-          font-size: 0.85rem;
+          font-size: 0.82rem;
           color: #1b2c13;
           font-weight: 700;
         }
         .perk-text span {
           display: block;
-          font-size: 0.78rem;
+          font-size: 0.75rem;
           color: #666;
+          line-height: 1.35;
         }
 
         /* Actions: Quantity + Button */
         .purchase-action-group {
           display: flex;
           flex-direction: column;
-          gap: 0.8rem;
+          gap: 0.7rem;
+          width: 100%;
+          box-sizing: border-box;
         }
         .quantity-and-add-row {
           display: flex;
-          gap: 0.8rem;
+          gap: 0.6rem;
+          width: 100%;
+          box-sizing: border-box;
         }
         .luxury-quantity-stepper {
           display: flex;
@@ -626,8 +659,8 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           background: #f6f5f0;
           border: 1px solid #ddd;
           border-radius: 6px;
-          width: 110px;
-          height: 52px;
+          width: 95px;
+          height: 48px;
           flex-shrink: 0;
         }
         .luxury-quantity-stepper button {
@@ -635,7 +668,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           height: 100%;
           background: none;
           border: none;
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           color: #111;
           cursor: pointer;
           display: flex;
@@ -645,32 +678,36 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         }
         .luxury-quantity-stepper .qty-value {
           font-weight: 700;
-          font-size: 1rem;
-          width: 30px;
+          font-size: 0.95rem;
+          width: 25px;
           text-align: center;
         }
         .primary-add-to-cart-btn {
           flex: 1;
-          height: 52px;
+          min-width: 0;
+          height: 48px;
           background-color: #1b2c13;
           color: #fff;
           border: none;
           border-radius: 6px;
           font-family: var(--font-sans);
-          font-size: 0.9rem;
+          font-size: 0.82rem;
           font-weight: 700;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.04em;
           text-transform: uppercase;
           cursor: pointer;
-          box-shadow: 0 4px 15px rgba(27,44,19,0.2);
+          box-shadow: 0 4px 12px rgba(27,44,19,0.18);
           transition: all 0.2s ease;
           display: flex;
           align-items: center;
           justify-content: center;
+          padding: 0 0.6rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         .primary-add-to-cart-btn:hover:not(:disabled) {
           background-color: #27401c;
-          transform: translateY(-1px);
         }
         .primary-add-to-cart-btn.success {
           background-color: #2e7d32;
@@ -678,15 +715,20 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         .secondary-bundle-btn {
           display: block;
           text-align: center;
-          padding: 0.8rem;
+          padding: 0.75rem 0.8rem;
           background-color: #fff;
           border: 1px dashed #1b2c13;
           color: #1b2c13;
           border-radius: 6px;
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           font-weight: 700;
           text-decoration: none;
           transition: all 0.2s ease;
+          line-height: 1.4;
+          word-break: break-word;
+          overflow-wrap: break-word;
+          width: 100%;
+          box-sizing: border-box;
         }
         .secondary-bundle-btn:hover {
           background-color: #f6f5f0;
@@ -695,49 +737,56 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         /* Pincode Check */
         .pincode-check-card {
           border: 1px solid #eee;
-          padding: 1.1rem;
+          padding: 1rem;
           border-radius: 8px;
           background-color: #fff;
+          width: 100%;
+          box-sizing: border-box;
         }
         .pincode-label {
           display: block;
-          font-size: 0.8rem;
+          font-size: 0.78rem;
           font-weight: 700;
           color: #444;
           text-transform: uppercase;
           letter-spacing: 0.05em;
-          margin-bottom: 0.6rem;
+          margin-bottom: 0.5rem;
         }
         .pincode-form {
           display: flex;
           gap: 0.5rem;
+          width: 100%;
         }
         .pincode-input {
           flex: 1;
-          padding: 0.65rem 0.8rem;
+          min-width: 0;
+          padding: 0.6rem 0.75rem;
           border: 1px solid #ccc;
           border-radius: 4px;
-          font-size: 0.85rem;
+          font-size: 0.82rem;
           font-family: var(--font-sans);
           outline: none;
+          box-sizing: border-box;
         }
         .pincode-input:focus {
           border-color: #1b2c13;
         }
         .pincode-btn {
-          padding: 0.65rem 1.2rem;
+          padding: 0.6rem 1rem;
           background-color: #111;
           color: #fff;
           border: none;
           border-radius: 4px;
-          font-size: 0.82rem;
+          font-size: 0.78rem;
           font-weight: 700;
           cursor: pointer;
+          flex-shrink: 0;
         }
         .pincode-result {
-          font-size: 0.8rem;
-          margin: 0.6rem 0 0 0;
+          font-size: 0.78rem;
+          margin: 0.5rem 0 0 0;
           font-weight: 600;
+          line-height: 1.4;
         }
         .pincode-result.success {
           color: #2e7d32;
@@ -750,27 +799,29 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         .complete-gift-upsell-card {
           border: 1px solid #eaeaea;
           border-radius: 8px;
-          padding: 1.1rem;
+          padding: 1rem;
           background-color: #fff;
+          width: 100%;
+          box-sizing: border-box;
         }
         .upsell-heading {
-          margin-bottom: 0.8rem;
+          margin-bottom: 0.6rem;
         }
         .upsell-badge {
           background-color: #ebd492;
           color: #1b2c13;
-          font-size: 0.65rem;
+          font-size: 0.62rem;
           font-weight: 800;
           text-transform: uppercase;
           letter-spacing: 0.05em;
-          padding: 0.2rem 0.5rem;
+          padding: 0.15rem 0.45rem;
           border-radius: 3px;
           display: inline-block;
-          margin-bottom: 0.3rem;
+          margin-bottom: 0.25rem;
         }
         .upsell-heading p {
           margin: 0;
-          font-size: 0.82rem;
+          font-size: 0.78rem;
           font-weight: 600;
           color: #444;
         }
@@ -778,16 +829,19 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          gap: 1rem;
+          gap: 0.6rem;
+          width: 100%;
         }
         .upsell-product-preview {
           display: flex;
           align-items: center;
-          gap: 0.8rem;
+          gap: 0.6rem;
+          min-width: 0;
+          flex: 1;
         }
         .upsell-img-wrap {
-          width: 48px;
-          height: 48px;
+          width: 42px;
+          height: 42px;
           border-radius: 6px;
           overflow: hidden;
           background-color: #f5f5f5;
@@ -798,15 +852,22 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           height: 100%;
           object-fit: cover;
         }
+        .upsell-meta {
+          min-width: 0;
+          flex: 1;
+        }
         .upsell-meta h4 {
-          margin: 0 0 0.2rem 0;
-          font-size: 0.85rem;
+          margin: 0 0 0.15rem 0;
+          font-size: 0.8rem;
           font-weight: 600;
           color: #111;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         .upsell-price {
           margin: 0;
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           font-weight: 700;
           color: #1b2c13;
         }
@@ -814,27 +875,32 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         /* Tabs Section */
         .pdp-tabs-section {
           border-top: 1px solid #eee;
-          padding-top: 1.5rem;
-          margin-top: 0.5rem;
+          padding-top: 1.2rem;
+          margin-top: 0.4rem;
+          width: 100%;
+          min-width: 0;
+          box-sizing: border-box;
         }
         .pdp-tab-headers {
           display: flex;
-          gap: 1.5rem;
+          gap: 1.2rem;
           border-bottom: 1px solid #eee;
-          margin-bottom: 1.2rem;
+          margin-bottom: 1rem;
           overflow-x: auto;
+          width: 100%;
         }
         .tab-link {
           background: none;
           border: none;
-          padding: 0.6rem 0;
+          padding: 0.5rem 0;
           font-family: var(--font-sans);
-          font-size: 0.88rem;
+          font-size: 0.82rem;
           font-weight: 600;
           color: #777;
           cursor: pointer;
           position: relative;
           white-space: nowrap;
+          flex-shrink: 0;
         }
         .tab-link.active {
           color: #1b2c13;
@@ -850,44 +916,56 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           background-color: #1b2c13;
         }
         .pdp-tab-content {
-          font-size: 0.92rem;
+          font-size: 0.88rem;
           color: #444;
-          line-height: 1.7;
+          line-height: 1.6;
+          width: 100%;
+          word-break: break-word;
+          overflow-wrap: break-word;
         }
         .specs-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 1rem;
+          grid-template-columns: 1fr;
+          gap: 0.8rem;
+          width: 100%;
+        }
+        @media (min-width: 600px) {
+          .specs-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
         }
         .spec-pill {
           display: flex;
-          gap: 0.8rem;
+          gap: 0.7rem;
           align-items: flex-start;
           background-color: #faf9f5;
-          padding: 0.9rem;
+          padding: 0.8rem;
           border-radius: 6px;
+          box-sizing: border-box;
         }
         .spec-icon {
-          font-size: 1.3rem;
+          font-size: 1.2rem;
         }
         .spec-pill strong {
           display: block;
-          font-size: 0.82rem;
+          font-size: 0.8rem;
           color: #111;
         }
         .spec-pill span {
           display: block;
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           color: #666;
+          line-height: 1.35;
         }
         .candle-care-list {
-          padding-left: 1.2rem;
+          padding-left: 1.1rem;
           margin: 0;
           display: flex;
           flex-direction: column;
-          gap: 0.6rem;
-          font-size: 0.88rem;
+          gap: 0.5rem;
+          font-size: 0.82rem;
           color: #555;
+          line-height: 1.5;
         }
 
         /* Mobile Sticky Buy Bar */
@@ -899,32 +977,39 @@ export default function ProductDetailClient({ product, relatedProducts }) {
             position: fixed;
             bottom: 0;
             left: 0;
+            right: 0;
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(8px);
+            max-width: 100vw;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
             border-top: 1px solid #eee;
-            padding: 0.8rem 1.2rem;
+            padding: 0.7rem 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 0.6rem;
             z-index: 999;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.06);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
           }
           .sticky-meta {
             display: flex;
             flex-direction: column;
+            min-width: 0;
+            flex: 1;
           }
           .sticky-title {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
             color: #111;
-            max-width: 180px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            display: block;
+            width: 100%;
           }
           .sticky-price {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 700;
             color: #1b2c13;
           }
@@ -932,14 +1017,24 @@ export default function ProductDetailClient({ product, relatedProducts }) {
             background-color: #1b2c13;
             color: #fff;
             border: none;
-            border-radius: 4px;
-            padding: 0.7rem 1.4rem;
-            font-size: 0.82rem;
+            border-radius: 6px;
+            padding: 0.65rem 1.1rem;
+            font-size: 0.78rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             cursor: pointer;
+            flex-shrink: 0;
+            white-space: nowrap;
           }
+        }
+
+        .hide-scroll::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scroll {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
     </div>

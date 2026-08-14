@@ -31,51 +31,51 @@ export default async function ProductPage({ params }) {
     .slice(0, 4);
 
   return (
-    <main style={{ backgroundColor: '#fff', minHeight: '100vh' }}>
+    <main style={{ backgroundColor: '#fff', minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
       <Header />
       
       {/* Top Main Product Detail Section */}
-      <div style={{ paddingTop: '75px' }}>
+      <div style={{ paddingTop: '75px', width: '100%', overflowX: 'hidden' }}>
         <ProductDetailClient product={product} relatedProducts={relatedProducts} />
       </div>
 
       {/* Brand Trust & Artisanal Craft Guarantee */}
-      <section style={{ backgroundColor: '#faf9f5', borderTop: '1px solid #eaeaea', borderBottom: '1px solid #eaeaea', padding: '4rem 1.5rem' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-          <span style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '0.8rem', fontFamily: 'var(--font-sans)' }}>
+      <section style={{ backgroundColor: '#faf9f5', borderTop: '1px solid #eaeaea', borderBottom: '1px solid #eaeaea', padding: '3.5rem 1rem', width: '100%', boxSizing: 'border-box' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center', width: '100%' }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '0.6rem', fontFamily: 'var(--font-sans)' }}>
             ✦ The Phases Difference ✦
           </span>
-          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.8rem, 3.5vw, 2.3rem)', fontWeight: 400, color: '#1b2c13', marginBottom: '3rem' }}>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)', fontWeight: 400, color: '#1b2c13', marginBottom: '2.5rem' }}>
             Why Gifting with Phases Feels Special
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '2.5rem', fontFamily: 'var(--font-sans)' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', marginBottom: '1.2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1.5rem', fontFamily: 'var(--font-sans)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div style={{ width: '50px', height: '50px', borderRadius: '50%', backgroundColor: '#fff', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '0.8rem' }}>
                 🌱
               </div>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#111', margin: '0 0 0.4rem 0' }}>100% Clean Soy Wax</h3>
-              <p style={{ fontSize: '0.85rem', color: '#666', lineHeight: 1.5, margin: 0 }}>Natural botanical wax with lead-free cotton wicks for a soot-free experience.</p>
+              <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#111', margin: '0 0 0.3rem 0' }}>100% Clean Soy Wax</h3>
+              <p style={{ fontSize: '0.78rem', color: '#666', lineHeight: 1.4, margin: 0 }}>Natural botanical wax with lead-free cotton wicks.</p>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', marginBottom: '1.2rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div style={{ width: '50px', height: '50px', borderRadius: '50%', backgroundColor: '#fff', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '0.8rem' }}>
                 🎁
               </div>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#111', margin: '0 0 0.4rem 0' }}>Boutique Presentation</h3>
-              <p style={{ fontSize: '0.85rem', color: '#666', lineHeight: 1.5, margin: 0 }}>Every single item is packaged with love, tissue shreddings, and protective cushioning.</p>
+              <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#111', margin: '0 0 0.3rem 0' }}>Boutique Box Ready</h3>
+              <p style={{ fontSize: '0.78rem', color: '#666', lineHeight: 1.4, margin: 0 }}>Packaged with luxury tissue and protective cushioning.</p>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', marginBottom: '1.2rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div style={{ width: '50px', height: '50px', borderRadius: '50%', backgroundColor: '#fff', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '0.8rem' }}>
                 ✍️
               </div>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#111', margin: '0 0 0.4rem 0' }}>Personalized Touch</h3>
-              <p style={{ fontSize: '0.85rem', color: '#666', lineHeight: 1.5, margin: 0 }}>Add handwritten cards and custom gift box combinations in just one click.</p>
+              <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#111', margin: '0 0 0.3rem 0' }}>Handwritten Card</h3>
+              <p style={{ fontSize: '0.78rem', color: '#666', lineHeight: 1.4, margin: 0 }}>Add personal notes and custom cards in one click.</p>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', marginBottom: '1.2rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div style={{ width: '50px', height: '50px', borderRadius: '50%', backgroundColor: '#fff', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '0.8rem' }}>
                 🚚
               </div>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#111', margin: '0 0 0.4rem 0' }}>Pan-India Fast Dispatch</h3>
-              <p style={{ fontSize: '0.85rem', color: '#666', lineHeight: 1.5, margin: 0 }}>Dispatched within 24-48 hours with real-time SMS & WhatsApp tracking.</p>
+              <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#111', margin: '0 0 0.3rem 0' }}>Fast Pan-India</h3>
+              <p style={{ fontSize: '0.78rem', color: '#666', lineHeight: 1.4, margin: 0 }}>Dispatched within 24-48 hours with live tracking.</p>
             </div>
           </div>
         </div>
@@ -83,17 +83,17 @@ export default async function ProductPage({ params }) {
 
       {/* Curated Recommendations */}
       {relatedProducts.length > 0 && (
-        <section style={{ maxWidth: '1350px', margin: '0 auto', padding: '4.5rem 1.5rem', fontFamily: 'var(--font-sans)' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '0.5rem' }}>
+        <section style={{ maxWidth: '1350px', margin: '0 auto', padding: '3.5rem 1rem', fontFamily: 'var(--font-sans)', width: '100%', boxSizing: 'border-box' }}>
+          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '0.4rem' }}>
               Handpicked Pairings
             </span>
-            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.8rem, 3.5vw, 2.3rem)', fontWeight: 400, color: '#111', margin: 0 }}>
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)', fontWeight: 400, color: '#111', margin: 0 }}>
               You May Also Love
             </h2>
           </div>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.8rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem', width: '100%', boxSizing: 'border-box' }}>
             {relatedProducts.map((prod) => {
               const { node } = prod;
               const image = node.images?.edges?.[0]?.node;
@@ -110,7 +110,7 @@ export default async function ProductPage({ params }) {
                     flexDirection: 'column',
                     height: '100%',
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
                   }}>
                     <div style={{ width: '100%', aspectRatio: '4/5', backgroundColor: '#f8f8f8', overflow: 'hidden' }}>
                       {image ? (
@@ -123,11 +123,11 @@ export default async function ProductPage({ params }) {
                         <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#aaa' }}>No Image</div>
                       )}
                     </div>
-                    <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                      <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#111', margin: '0 0 0.4rem 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', height: '2.4rem', lineHeight: '1.2rem' }}>
+                    <div style={{ padding: '0.8rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                      <h3 style={{ fontSize: '0.82rem', fontWeight: 600, color: '#111', margin: '0 0 0.3rem 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', height: '2.2rem', lineHeight: '1.1rem' }}>
                         {node.title.split('|')[0].trim()}
                       </h3>
-                      <p style={{ margin: 'auto 0 0 0', fontWeight: 700, fontSize: '1rem', color: '#1b2c13', paddingTop: '0.4rem' }}>
+                      <p style={{ margin: 'auto 0 0 0', fontWeight: 700, fontSize: '0.9rem', color: '#1b2c13', paddingTop: '0.3rem' }}>
                         {new Intl.NumberFormat('en-IN', {
                           style: 'currency',
                           currency: relatedPrice.currencyCode,
@@ -144,17 +144,17 @@ export default async function ProductPage({ params }) {
       )}
 
       {/* Minimalist Dark Green Footer */}
-      <footer style={{ backgroundColor: '#1b2c13', color: '#fff', padding: '4rem 2rem 2rem 2rem', fontFamily: 'var(--font-sans)' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.8rem', fontStyle: 'italic', fontWeight: 300, marginBottom: '1.5rem', letterSpacing: '1px' }}>
+      <footer style={{ backgroundColor: '#1b2c13', color: '#fff', padding: '3.5rem 1.5rem 2rem 1.5rem', fontFamily: 'var(--font-sans)', width: '100%', boxSizing: 'border-box' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.2rem', fontStyle: 'italic', fontWeight: 300, marginBottom: '1rem', letterSpacing: '1px' }}>
               Phases Handcrafted
             </h2>
-            <p style={{ color: '#ccc', fontSize: '0.9rem', maxWidth: '400px', margin: '0 auto' }}>
+            <p style={{ color: '#ccc', fontSize: '0.85rem', maxWidth: '380px', margin: '0 auto', lineHeight: 1.5 }}>
               Handcrafted in small batches with pure botanicals and unconditional care.
             </p>
           </div>
-          <div style={{ marginTop: '3rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '2rem', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1.5rem', fontSize: '0.75rem', letterSpacing: '0.1em', color: '#aaa', textTransform: 'uppercase' }}>
+          <div style={{ marginTop: '2.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1.5rem', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', fontSize: '0.72rem', letterSpacing: '0.08em', color: '#aaa', textTransform: 'uppercase' }}>
             <span>COPYRIGHT &copy;{new Date().getFullYear()} PHASES HANDCRAFTED</span>
           </div>
         </div>
