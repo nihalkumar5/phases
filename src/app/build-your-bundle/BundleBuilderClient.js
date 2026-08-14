@@ -147,7 +147,7 @@ export default function BundleBuilderClient({ products }) {
   const filteredProducts = products.filter(p => p.category === activeCategory);
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }} className="builder-desktop-grid">
+    <div style={{ display: 'grid', gridTemplateColumns: '100%', gap: '2rem', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }} className="builder-desktop-grid">
       
       {/* CSS injection for split columns and custom layouts */}
       <style jsx global>{`
@@ -164,10 +164,16 @@ export default function BundleBuilderClient({ products }) {
         .builder-step-card {
           background-color: #fff;
           border-radius: 12px;
-          padding: 2rem;
+          padding: 1rem;
           margin-bottom: 2rem;
           box-shadow: 0 4px 20px rgba(0,0,0,0.02);
           border: 1px solid rgba(0,0,0,0.04);
+          overflow: hidden;
+        }
+        @media (min-width: 992px) {
+          .builder-step-card {
+            padding: 2rem;
+          }
         }
         .step-badge {
           display: inline-block;
@@ -231,7 +237,7 @@ export default function BundleBuilderClient({ products }) {
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 400, color: '#111', marginBottom: '1.5rem' }}>
             Choose Your Box Size
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem' }}>
             {Object.entries(boxConfigs).map(([size, config]) => (
               <div 
                 key={size}
@@ -303,7 +309,7 @@ export default function BundleBuilderClient({ products }) {
           </div>
 
           {/* Products Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '0.8rem' }}>
             {filteredProducts.map(product => {
               const cartItem = selectedItems.find(item => item.product.id === product.id);
               const qty = cartItem ? cartItem.quantity : 0;
@@ -467,7 +473,7 @@ export default function BundleBuilderClient({ products }) {
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 400, color: '#111', marginBottom: '1.5rem' }}>
             Choose Packaging Style
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem' }}>
             {[
               { id: 'basic', name: 'Basic Wrap', desc: 'Craft carton box with bubblewrap safety.', price: 0, icon: '📦' },
               { id: 'premium', name: 'Signature Premium', desc: 'Elegant matte finish rigid box with shreddings and ribbon.', price: 79, icon: '🎀' },
