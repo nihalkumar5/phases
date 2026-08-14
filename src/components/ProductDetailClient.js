@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useCart } from './CartContext';
 import UpsellButton from './UpsellButton';
@@ -14,6 +14,8 @@ export default function ProductDetailClient({ product, relatedProducts }) {
   const [pincodeMessage, setPincodeMessage] = useState(null);
   const [isAddedAnimation, setIsAddedAnimation] = useState(false);
 
+  const galleryRef = useRef(null);
+
   const images = product.images?.edges?.map(e => e.node) || [];
   const variant = product.variants?.edges?.[0]?.node;
   const isAvailable = variant?.availableForSale !== false;
@@ -24,6 +26,30 @@ export default function ProductDetailClient({ product, relatedProducts }) {
     currency: price?.currencyCode || 'INR',
     maximumFractionDigits: 0
   }).format(numericPrice);
+
+  const scrollToImage = (idx) => {
+    if (idx < 0 || idx >= images.length) return;
+    setSelectedImageIndex(idx);
+    if (galleryRef.current) {
+      const scrollWidth = galleryRef.current.offsetWidth;
+      galleryRef.current.scrollTo({
+        left: idx * scrollWidth,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const handleGalleryScroll = () => {
+    if (!galleryRef.current) return;
+    const scrollLeft = galleryRef.current.scrollLeft;
+    const width = galleryRef.current.offsetWidth;
+    if (width > 0) {
+      const newIdx = Math.round(scrollLeft / width);
+      if (newIdx >= 0 && newIdx < images.length && newIdx !== selectedImageIndex) {
+        setSelectedImageIndex(newIdx);
+      }
+    }
+  };
 
   const handleAddToCart = async () => {
     if (!variant?.id || !isAvailable) return;
@@ -63,7 +89,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               {images.map((img, idx) => (
                 <button
                   key={idx}
-                  onClick={() => setSelectedImageIndex(idx)}
+                  onClick={() => scrollToImage(idx)}
                   className={`thumb-btn ${selectedImageIndex === idx ? 'active' : ''}`}
                   aria-label={`Thumbnail ${idx + 1}`}
                 >
@@ -73,28 +99,65 @@ export default function ProductDetailClient({ product, relatedProducts }) {
             </div>
           )}
 
-          {/* Featured Image Display / Mobile Swipe */}
+          {/* Swipeable Gallery Viewport */}
           <div className="main-image-viewport">
-            <div className="main-image-container">
-              {images[selectedImageIndex] ? (
-                <img 
-                  src={images[selectedImageIndex].url} 
-                  alt={images[selectedImageIndex].altText || product.title} 
-                  className="hero-product-image"
-                />
+            <div className="gallery-container">
+              {images.length > 0 ? (
+                <div 
+                  ref={galleryRef}
+                  onScroll={handleGalleryScroll}
+                  className="gallery-scroll-track hide-scroll"
+                >
+                  {images.map((img, idx) => (
+                    <div key={idx} className="gallery-slide-item">
+                      <img 
+                        src={img.url} 
+                        alt={img.altText || `${product.title} photo ${idx + 1}`} 
+                        className="hero-product-image"
+                        loading={idx === 0 ? "eager" : "lazy"}
+                      />
+                    </div>
+                  ))}
+                </div>
               ) : (
                 <div className="no-image-placeholder">No Image Available</div>
               )}
+              
               <span className="luxury-badge">✦ Handcrafted Soy</span>
+
+              {/* Prev / Next Arrows */}
+              {images.length > 1 && (
+                <>
+                  <button 
+                    onClick={() => scrollToImage(selectedImageIndex - 1)}
+                    disabled={selectedImageIndex === 0}
+                    className="gallery-nav-arrow prev"
+                    aria-label="Previous image"
+                  >
+                    ‹
+                  </button>
+                  <button 
+                    onClick={() => scrollToImage(selectedImageIndex + 1)}
+                    disabled={selectedImageIndex === images.length - 1}
+                    className="gallery-nav-arrow next"
+                    aria-label="Next image"
+                  >
+                    ›
+                  </button>
+                  <div className="image-counter-pill">
+                    {selectedImageIndex + 1} / {images.length}
+                  </div>
+                </>
+              )}
             </div>
 
-            {/* Mobile Carousel Indicators */}
+            {/* Mobile / Desktop Dots Indicator */}
             {images.length > 1 && (
               <div className="mobile-dots-indicator">
                 {images.map((_, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setSelectedImageIndex(idx)}
+                    onClick={() => scrollToImage(idx)}
                     className={`dot-pill ${selectedImageIndex === idx ? 'active' : ''}`}
                     aria-label={`Slide ${idx + 1}`}
                   />
@@ -470,7 +533,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           min-width: 0;
           width: 100%;
         }
-        .main-image-container {
+        .gallery-container {
           position: relative;
           width: 100%;
           aspect-ratio: 4/5;
@@ -481,11 +544,29 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           border: 1px solid rgba(0,0,0,0.04);
           box-sizing: border-box;
         }
+        .gallery-scroll-track {
+          display: flex;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          width: 100%;
+          height: 100%;
+        }
+        .gallery-slide-item {
+          flex: 0 0 100%;
+          width: 100%;
+          height: 100%;
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
+          position: relative;
+        }
         .hero-product-image {
           width: 100%;
           height: 100%;
           object-fit: cover;
           display: block;
+          user-select: none;
+          -webkit-user-drag: none;
         }
         .luxury-badge {
           position: absolute;
@@ -502,17 +583,60 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           border-radius: 20px;
           box-shadow: 0 2px 6px rgba(0,0,0,0.06);
           white-space: nowrap;
+          pointer-events: none;
+          z-index: 2;
+        }
+        .image-counter-pill {
+          position: absolute;
+          bottom: 12px;
+          right: 12px;
+          background-color: rgba(0,0,0,0.6);
+          color: #fff;
+          font-size: 0.7rem;
+          font-weight: 600;
+          padding: 0.25rem 0.6rem;
+          border-radius: 12px;
+          letter-spacing: 0.05em;
+          pointer-events: none;
+          z-index: 2;
+        }
+        .gallery-nav-arrow {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.88);
+          backdrop-filter: blur(4px);
+          border: 1px solid rgba(0,0,0,0.08);
+          color: #111;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.4rem;
+          line-height: 1;
+          cursor: pointer;
+          z-index: 3;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          transition: all 0.2s ease;
+          padding: 0;
+        }
+        .gallery-nav-arrow.prev {
+          left: 10px;
+        }
+        .gallery-nav-arrow.next {
+          right: 10px;
+        }
+        .gallery-nav-arrow:disabled {
+          opacity: 0;
+          pointer-events: none;
         }
         .mobile-dots-indicator {
           display: flex;
           justify-content: center;
           gap: 0.4rem;
           margin-top: 0.8rem;
-        }
-        @media (min-width: 992px) {
-          .mobile-dots-indicator {
-            display: none;
-          }
         }
         .dot-pill {
           width: 20px;
