@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useCart } from './CartContext';
+import TopMarquee from './TopMarquee';
 
 export default function Header({ theme = 'light' }) {
   const { openCart, cart } = useCart();
@@ -32,26 +33,49 @@ export default function Header({ theme = 'light' }) {
 
   const isTransparent = theme === 'transparent' || theme === 'transparent-dark';
   const isDarkText = theme === 'light' || theme === 'transparent-dark';
-  
+
   return (
     <>
-      {/* Announcement Bar */}
       <div style={{
+        width: '100%',
         backgroundColor: '#1b2c13',
-        color: '#ffffff', 
-        padding: '0.6rem 1rem', 
-        fontSize: '0.65rem',
-        fontWeight: '700',
-        display: 'flex', 
-        justifyContent: 'center',
+        color: '#ebd492',
+        padding: '8px 0',
+        overflow: 'hidden',
+        position: 'relative',
+        display: 'flex',
         alignItems: 'center',
-        letterSpacing: '0.1em',
+        fontFamily: 'var(--font-sans), sans-serif',
+        fontSize: '0.75rem',
+        fontWeight: 700,
+        letterSpacing: '0.08em',
         textTransform: 'uppercase'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          SCENT OF THE MONTH OFFER <span style={{ fontSize: '0.8rem' }}>🤍</span>
+        <div style={{
+          display: 'flex',
+          whiteSpace: 'nowrap',
+          animation: 'scrollLeft 30s linear infinite'
+        }}>
+          <span style={{ padding: '0 1rem' }}>✨ Handcrafted soy candles & adorable plush toys</span>
+          <span style={{ color: 'rgba(238, 212, 146, 0.4)' }}>✦</span>
+          <span style={{ padding: '0 1rem' }}>Free shipping on all prepaid orders</span>
+          <span style={{ color: 'rgba(238, 212, 146, 0.4)' }}>✦</span>
+          <span style={{ padding: '0 1rem' }}>Build your own premium gift bundle for just ₹999</span>
+          <span style={{ color: 'rgba(238, 212, 146, 0.4)' }}>✦</span>
+          <span style={{ padding: '0 1rem' }}>✨ Handcrafted soy candles & adorable plush toys</span>
+          <span style={{ color: 'rgba(238, 212, 146, 0.4)' }}>✦</span>
+          <span style={{ padding: '0 1rem' }}>Free shipping on all prepaid orders</span>
+          <span style={{ color: 'rgba(238, 212, 146, 0.4)' }}>✦</span>
+          <span style={{ padding: '0 1rem' }}>Build your own premium gift bundle for just ₹999</span>
+          <span style={{ color: 'rgba(238, 212, 146, 0.4)' }}>✦</span>
         </div>
       </div>
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes scrollLeft {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}} />
       
       {/* Main Header */}
       <header 

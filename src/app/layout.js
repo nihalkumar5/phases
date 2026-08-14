@@ -4,6 +4,8 @@ import { CartProvider } from "@/components/CartContext";
 import Cart from "@/components/Cart";
 import DiscountPopup from "@/components/DiscountPopup";
 
+import TopMarquee from "@/components/TopMarquee";
+
 const playfair = Playfair_Display({ subsets: ["latin"], variable: '--font-serif' });
 const outfit = Outfit({ subsets: ["latin"], variable: '--font-sans' });
 const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: '--font-mono' });
