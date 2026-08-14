@@ -5,7 +5,6 @@ import ReviewsSection from '@/components/ReviewsSection';
 import Link from 'next/link';
 import BestSellersCarousel from '@/components/BestSellersCarousel';
 import VideoReels from '@/components/VideoReels';
-import CategoryProducts from '@/components/CategoryProducts';
 import ReadyToGiftHampers from '@/components/ReadyToGiftHampers';
 
 export const dynamic = 'force-dynamic';
@@ -76,7 +75,7 @@ export default async function Home() {
             Handcrafted soy candles, adorable plush toys & festive picks — thoughtfully curated and custom-packed for every special moment.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
-            <Link href="#products" style={{ 
+            <Link href="/shop" style={{ 
               backgroundColor: '#1b2c13', color: '#fff', padding: '1.1rem 2.2rem', borderRadius: '4px',
               fontFamily: 'var(--font-sans)', fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', textDecoration: 'none',
               boxShadow: '0 4px 15px rgba(27,44,19,0.15)', transition: 'all 0.2s ease'
@@ -122,12 +121,12 @@ export default async function Home() {
           <p style={{ color: '#666', fontSize: '0.95rem', marginBottom: '3rem', fontFamily: 'var(--font-sans)' }}>Find the perfect gift tailored for every milestone.</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '1.5rem' }}>
             {[
-              { label: 'Birthday', icon: '🎂', bg: '#fcddec', query: '/?occasion=Birthday#products' },
-              { label: 'Anniversary', icon: '❤️', bg: '#fde2e4', query: '/?occasion=Anniversary#products' },
-              { label: 'Raksha Bandhan', icon: '🧵', bg: '#ffeed9', query: '/?occasion=Raksha%20Bandhan#products' },
-              { label: 'Romantic', icon: '💕', bg: '#ffcad4', query: '/?occasion=Romantic#products' },
-              { label: 'Festive Gifts', icon: '✨', bg: '#e8f5e9', query: '/?occasion=Festive#products' },
-              { label: 'Kids Gifts', icon: '👶', bg: '#e3f2fd', query: '/?occasion=Kids#products' }
+              { label: 'Birthday', icon: '🎂', bg: '#fcddec', query: '/shop?occasion=Birthday' },
+              { label: 'Anniversary', icon: '❤️', bg: '#fde2e4', query: '/shop?occasion=Anniversary' },
+              { label: 'Raksha Bandhan', icon: '🧵', bg: '#ffeed9', query: '/shop?occasion=Raksha%20Bandhan' },
+              { label: 'Romantic', icon: '💕', bg: '#ffcad4', query: '/shop?occasion=Romantic' },
+              { label: 'Festive Gifts', icon: '✨', bg: '#e8f5e9', query: '/shop?occasion=Festive' },
+              { label: 'Kids Gifts', icon: '👶', bg: '#e3f2fd', query: '/shop?occasion=Kids' }
             ].map((occ, i) => (
               <Link href={occ.query} key={i} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="hover-card"
@@ -191,10 +190,10 @@ export default async function Home() {
           <p style={{ color: '#666', fontSize: '0.95rem', marginBottom: '3.5rem', fontFamily: 'var(--font-sans)' }}>Filter products instantly based on your budget limit.</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
             {[
-              { label: 'Under ₹299', desc: 'Small surprises', query: '/?budget=Under%20%E2%82%B9299#products' },
-              { label: 'Under ₹499', desc: 'Thoughtful gestures', query: '/?budget=Under%20%E2%82%B9499#products' },
-              { label: 'Under ₹999', desc: 'Perfect gift sets', query: '/?budget=Under%20%E2%82%B9999#products' },
-              { label: 'Premium Gifts', desc: 'Luxury collections', query: '/?budget=Premium#products' }
+              { label: 'Under ₹299', desc: 'Small surprises', query: '/shop?budget=Under%20%E2%82%B9299' },
+              { label: 'Under ₹499', desc: 'Thoughtful gestures', query: '/shop?budget=Under%20%E2%82%B9499' },
+              { label: 'Under ₹999', desc: 'Perfect gift sets', query: '/shop?budget=Under%20%E2%82%B9999' },
+              { label: 'Premium Gifts', desc: 'Luxury collections', query: '/shop?budget=Premium' }
             ].map((bud, i) => (
               <Link href={bud.query} key={i} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="hover-card"
@@ -214,9 +213,6 @@ export default async function Home() {
 
       {/* Ready-to-Gift Hampers grid shelf */}
       <ReadyToGiftHampers hampers={curatedHampers} />
-
-      {/* Catalog & Filter Grid */}
-      <CategoryProducts products={products} />
 
       {/* Reviews Section */}
       <ReviewsSection />

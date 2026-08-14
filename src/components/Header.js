@@ -236,11 +236,17 @@ export default function Header({ theme = 'light' }) {
               <div>
                 <p style={{ fontSize: '0.7rem', fontWeight: 700, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.6rem 0' }}>Shop by Category</p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  {['Candles', 'Soft Toys', 'Keychains', 'Gift Hampers', 'All Products'].map((item, i) => (
-                    <Link href="/#products" key={i} onClick={() => setIsMenuOpen(false)} className="premium-menu-link" style={{
+                  {[
+                    { label: 'Candles', query: '/shop?category=Candles' },
+                    { label: 'Soft Toys', query: '/shop?category=Soft%20Toys' },
+                    { label: 'Keychains', query: '/shop?category=Keychains' },
+                    { label: 'Gift Hampers', query: '/shop?category=Gift%20Hampers' },
+                    { label: 'All Products', query: '/shop' }
+                  ].map((item, i) => (
+                    <Link href={item.query} key={i} onClick={() => setIsMenuOpen(false)} className="premium-menu-link" style={{
                       textDecoration: 'none', color: '#111', fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: '0.95rem', padding: '0.2rem 0', display: 'block'
                     }}>
-                      {item}
+                      {item.label}
                     </Link>
                   ))}
                 </div>
@@ -250,11 +256,17 @@ export default function Header({ theme = 'light' }) {
               <div>
                 <p style={{ fontSize: '0.7rem', fontWeight: 700, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.6rem 0' }}>Shop by Occasion</p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  {['Birthday', 'Anniversary', 'Raksha Bandhan', 'Romantic Gifts', 'Festive Gifts'].map((item, i) => (
-                    <Link href="/#products" key={i} onClick={() => setIsMenuOpen(false)} className="premium-menu-link" style={{
+                  {[
+                    { label: 'Birthday', query: '/shop?occasion=Birthday' },
+                    { label: 'Anniversary', query: '/shop?occasion=Anniversary' },
+                    { label: 'Raksha Bandhan', query: '/shop?occasion=Raksha%20Bandhan' },
+                    { label: 'Romantic Gifts', query: '/shop?occasion=Romantic' },
+                    { label: 'Festive Gifts', query: '/shop?occasion=Festive' }
+                  ].map((item, i) => (
+                    <Link href={item.query} key={i} onClick={() => setIsMenuOpen(false)} className="premium-menu-link" style={{
                       textDecoration: 'none', color: '#111', fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: '0.95rem', padding: '0.2rem 0', display: 'block'
                     }}>
-                      {item}
+                      {item.label}
                     </Link>
                   ))}
                 </div>
@@ -264,11 +276,16 @@ export default function Header({ theme = 'light' }) {
               <div>
                 <p style={{ fontSize: '0.7rem', fontWeight: 700, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.6rem 0' }}>Shop by Budget</p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  {['Under ₹299', 'Under ₹499', 'Under ₹999', 'Premium Gifts'].map((item, i) => (
-                    <Link href="/#products" key={i} onClick={() => setIsMenuOpen(false)} className="premium-menu-link" style={{
+                  {[
+                    { label: 'Under ₹299', query: '/shop?budget=Under%20%E2%82%B9299' },
+                    { label: 'Under ₹499', query: '/shop?budget=Under%20%E2%82%B9499' },
+                    { label: 'Under ₹999', query: '/shop?budget=Under%20%E2%82%B9999' },
+                    { label: 'Premium Gifts', query: '/shop?budget=Premium' }
+                  ].map((item, i) => (
+                    <Link href={item.query} key={i} onClick={() => setIsMenuOpen(false)} className="premium-menu-link" style={{
                       textDecoration: 'none', color: '#111', fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: '0.95rem', padding: '0.2rem 0', display: 'block'
                     }}>
-                      {item}
+                      {item.label}
                     </Link>
                   ))}
                 </div>
