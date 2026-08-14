@@ -134,55 +134,55 @@ export default async function Home() {
           <p style={{ color: '#555', fontSize: '1rem', marginBottom: '3.5rem', fontFamily: 'var(--font-sans)', letterSpacing: '0.02em' }}>Find the perfect gift tailored for every milestone.</p>
           <div className="occasion-grid" style={{ gap: '1rem' }}>
             {[
-              { label: 'Birthdays', img: 'https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=600&q=80', query: '/shop?occasion=Birthday' },
-              { label: 'Anniversaries', img: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80', query: '/shop?occasion=Anniversary' },
-              { label: 'Festive Season', img: 'https://images.unsplash.com/photo-1542036735-a131b2064115?auto=format&fit=crop&w=600&q=80', query: '/shop?occasion=Festive' },
+              { label: 'Birthdays', img: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80', query: '/shop?occasion=Birthday' },
+              { label: 'Anniversaries', img: '/images/anniversary.jpg', query: '/shop?occasion=Anniversary' },
+              { label: 'Festive Season', img: '/images/diwali.jpg', query: '/shop?occasion=Festive' },
               { label: 'Romantic', img: 'https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?auto=format&fit=crop&w=600&q=80', query: '/shop?occasion=Romantic' },
               { label: 'Kids & Babies', img: 'https://images.unsplash.com/photo-1559454403-b8fb88521f11?auto=format&fit=crop&w=600&q=80', query: '/shop?occasion=Kids' },
-              { label: 'Raksha Bandhan', img: 'https://images.unsplash.com/photo-1596433809252-260c27459eb5?auto=format&fit=crop&w=600&q=80', query: '/shop?occasion=Raksha%20Bandhan' }
+              { label: 'Raksha Bandhan', img: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80', query: '/shop?occasion=Raksha%20Bandhan' }
             ].map((occ, i) => (
               <Link href={occ.query} key={i} style={{ textDecoration: 'none' }}>
-                <div className="occasion-card"
+                <div className="occasion-card hover-card"
                 style={{
-                  position: 'relative',
+                  backgroundColor: '#fff',
                   borderRadius: '12px',
                   overflow: 'hidden',
                   display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer'
+                  flexDirection: 'column',
+                  cursor: 'pointer',
+                  border: '1px solid rgba(0,0,0,0.04)',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
                 }}
                 >
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    backgroundImage: `url(${occ.img})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    transition: 'transform 0.7s ease',
-                    zIndex: 1
-                  }} className="occ-bg" />
+                  <div style={{ width: '100%', flex: 1, overflow: 'hidden' }}>
+                    <div style={{
+                      width: '100%', height: '100%',
+                      backgroundImage: `url(${occ.img})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      transition: 'transform 0.5s ease',
+                    }} className="occ-bg" />
+                  </div>
                   
                   <div style={{
-                    position: 'absolute', inset: 0,
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%)',
-                    zIndex: 2,
-                    transition: 'background 0.3s ease'
-                  }} className="occ-overlay" />
-                  
-                  <span style={{ 
-                    position: 'relative', 
-                    zIndex: 3, 
-                    color: '#fff', 
-                    fontFamily: 'var(--font-serif)', 
-                    fontSize: '1.8rem', 
-                    fontWeight: 400,
-                    letterSpacing: '0.02em',
-                    textShadow: '0 2px 10px rgba(0,0,0,0.3)',
-                    transform: 'translateY(10px)',
-                    transition: 'transform 0.4s ease'
-                  }} className="occ-title">
-                    {occ.label}
-                  </span>
+                    height: '50px',
+                    padding: '0 1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    backgroundColor: '#fff',
+                    borderTop: '1px solid rgba(0,0,0,0.03)'
+                  }}>
+                    <span style={{ 
+                      color: '#111', 
+                      fontFamily: 'var(--font-sans)', 
+                      fontSize: '0.9rem', 
+                      fontWeight: 700,
+                    }} className="occ-title">
+                      {occ.label}
+                    </span>
+                    <span style={{ color: '#ccc', fontSize: '1rem', transform: 'translateY(-1px)' }}>→</span>
+                  </div>
                 </div>
               </Link>
             ))}
@@ -334,12 +334,6 @@ export default async function Home() {
         .occasion-card:hover .occ-bg {
           transform: scale(1.05);
         }
-        .occasion-card:hover .occ-overlay {
-          background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%) !important;
-        }
-        .occasion-card:hover .occ-title {
-          transform: translateY(0);
-        }
         @media (max-width: 768px) {
           .trust-divider {
             border-left: none !important;
@@ -351,10 +345,10 @@ export default async function Home() {
             gap: 0.8rem !important;
           }
           .occasion-card {
-            height: 180px;
+            height: 220px;
           }
           .occ-title {
-            font-size: 1.1rem !important;
+            font-size: 0.8rem !important;
           }
         }
       `}} />
