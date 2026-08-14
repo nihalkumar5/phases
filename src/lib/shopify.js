@@ -323,3 +323,47 @@ export async function getCart(cartId) {
   const response = await shopifyFetch({ query, variables: { cartId } });
   return response.body?.data?.cart;
 }
+
+export async function applyDiscountToCart(cartId, discountCodes) {
+  const query = `
+    mutation cartDiscountCodesUpdate($cartId: ID!, $discountCodes: [String!]) {
+      cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
+        cart {
+          id
+          checkoutUrl
+          discountCodes {
+            code
+            applicable
+          }
+          lines(first: 50) {
+            edges {
+              node {
+                id
+                quantity
+                attributes {
+                  key
+                  value
+                }
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    title
+                    price { amount currencyCode }
+                    product { title handle }
+                    image { url }
+                  }
+                }
+              }
+            }
+          }
+          estimatedCost {
+            totalAmount { amount currencyCode }
+          }
+        }
+      }
+    }
+  `;
+  const variables = { cartId, discountCodes };
+  const response = await shopifyFetch({ query, variables });
+  return response.body?.data?.cartDiscountCodesUpdate?.cart;
+}

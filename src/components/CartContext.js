@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
-import { createCart, getCart as fetchCart, addToExistingCart, addMultipleLinesToCart, updateCartLines } from '@/lib/shopify';
+import { createCart, getCart as fetchCart, addToExistingCart, addMultipleLinesToCart, updateCartLines, applyDiscountToCart } from '@/lib/shopify';
 
 const CartContext = createContext();
 
@@ -116,11 +116,31 @@ export function CartProvider({ children }) {
     }
   };
 
+  const applyDiscount = async (code) => {
+    try {
+      setIsLoading(true);
+      const currentCartId = localStorage.getItem('shopify_cart_id');
+      if (!currentCartId) return false;
+      
+      const newCart = await applyDiscountToCart(currentCartId, [code]);
+      if (newCart) {
+        setCart(newCart);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error applying discount:', error);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
   return (
-    <CartContext.Provider value={{ cart, isCartOpen, isLoading, addToCart, addBundleToCart, updateQuantity, removeBundle, openCart, closeCart }}>
+    <CartContext.Provider value={{ cart, isCartOpen, isLoading, addToCart, addBundleToCart, updateQuantity, removeBundle, applyDiscount, openCart, closeCart }}>
       {children}
     </CartContext.Provider>
   );

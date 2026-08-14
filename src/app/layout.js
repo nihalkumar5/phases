@@ -2,6 +2,7 @@ import { Playfair_Display, Outfit, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/components/CartContext";
 import Cart from "@/components/Cart";
+import DiscountPopup from "@/components/DiscountPopup";
 
 const playfair = Playfair_Display({ subsets: ["latin"], variable: '--font-serif' });
 const outfit = Outfit({ subsets: ["latin"], variable: '--font-sans' });
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
         <CartProvider>
           {children}
           <Cart />
+          <DiscountPopup />
         </CartProvider>
       </body>
     </html>
